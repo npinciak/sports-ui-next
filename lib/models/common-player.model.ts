@@ -10,5 +10,5 @@ export interface CommonPlayerEntity {
   team: string;
   teamId: string;
   teamUid: string;
-  position: string;
+  position: string | null;
 }
