@@ -1,4 +1,4 @@
-import { FantasySportsAbbreviation, SportLeague } from './endpoint-builder';
+import { FANTASY_SPORTS_ABBREVIATION, FantasySportsAbbreviation, SPORT_LEAGUE, SportLeague } from './endpoint-builder';
 
 export interface ImageBuilderInput {
   id: number | string;
@@ -42,3 +42,5 @@ export function ImageBuilder({ league, sport }: { league?: SportLeague; sport?: 
     }
   };
 }
+
+export class BaseballImageHelper extends ImageBuilder({ league: SPORT_LEAGUE.MLB, sport: FANTASY_SPORTS_ABBREVIATION.Baseball }) { }

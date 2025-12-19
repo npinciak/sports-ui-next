@@ -72,9 +72,16 @@ export function clientSimplePlayerToBaseballPlayer(clientPlayer: IClientSimplePl
 }
 
 export function transformClientLeagueToBaseballLeagueV2(
-  client: IClientBaseballLeague,
-  genericLeagueSettings: IFantasyLeague
+  client: IClientBaseballLeague | null,
+  genericLeagueSettings: IFantasyLeague | null
 ): BaseballLeague {
+
+  if (!client) 
+    throw new Error('Client league data is null');
+
+  if(!genericLeagueSettings)
+    throw new Error('Generic league settings is null');
+
   const teams = client.teams.map(t => clientLeagueTeamListToLeagueTeamList(t));
   const transactions = client.transactions ? client.transactions.map(t => transformTransactionToBaseballTransaction(t)) : [];
 
