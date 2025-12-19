@@ -4,7 +4,7 @@ import { FantasyBaseballEndpointBuilder } from '@/lib/helpers/endpoint-builder/e
 import { clientTeamToBaseballTeam } from '@/lib/transformers/baseball/baseball-league-v2.transformers';
 import { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest, context: { params: { year: string; leagueId: string; teamId: string } }) {
+export async function GET(request: NextRequest, context: { params: Promise<{ year: string; leagueId: string, teamId: string }>; }) {
   const { year, leagueId, teamId } = await context.params;
 
   const getLeague = FantasyBaseballEndpointBuilder.getLeague(year, leagueId);
