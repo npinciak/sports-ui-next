@@ -7,5 +7,5 @@ export interface IClientEventEntity {
   summary: string;
   percentComplete: number;
   competitors: IClientCompetitorEntity[];
-  fullStatus: FullEventStatusEntity;
+  fullStatus: unknown;
 }

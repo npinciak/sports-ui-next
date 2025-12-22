@@ -1,4 +1,4 @@
-import { LineupEntityMap } from '@sdk/espn-client-models/lineup.model';
+import { LineupEntityMap } from '../../lineup.model';
 import { ClientMlbPosition } from '../position/mlb-position.model';
 import { ClientBaseballLineupSlot } from './lineup.model';
 
