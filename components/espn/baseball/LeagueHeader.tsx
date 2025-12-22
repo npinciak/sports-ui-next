@@ -3,10 +3,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BaseballImageHelper } from "@/lib/helpers";
 import { BaseballLeague } from "@/lib/models/baseball";
+import { IFantasyLeague } from "@/lib/models/fantasy-league.model";
 
 interface LeagueHeaderProps {
     isLoading: boolean;
-    league: BaseballLeague | null;
+    league: IFantasyLeague | null;
 }
 
 export default function LeagueHeader({ isLoading, league }: LeagueHeaderProps) {

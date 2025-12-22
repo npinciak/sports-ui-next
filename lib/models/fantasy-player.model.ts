@@ -1,5 +1,6 @@
 import { IClientPlayerStatsYearEntity } from '../espn-client-models';
 import { InjurySeverity, PlayerCompetitionStatus } from '../injury';
+import { CommonPlayerEntity } from './common-player.model';
 
 export interface FantasyPlayerEntity extends CommonPlayerEntity {
   sportsUiId: string;

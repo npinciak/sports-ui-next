@@ -1,6 +1,7 @@
 import { IClientBaseballLeague } from '@/lib/espn-client-models/league.model';
 import { EspnParamsBuilder } from '@/lib/helpers';
 import { FantasyBaseballEndpointBuilder } from '@/lib/helpers/endpoint-builder/endpoint-builder';
+import { fetchJson } from '@/lib/helpers/http-requests';
 import { clientTeamToBaseballTeam } from '@/lib/transformers/baseball/baseball-league-v2.transformers';
 import { NextRequest } from 'next/server';
 
@@ -13,14 +14,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ yea
 
   const url = `${getLeague}?${params.toString()}`;
 
-  const val = await fetch(url)
-    .then(res => res.json() as Promise<IClientBaseballLeague>)
-    .catch(err => {
-      console.error(err);
-      return null;
-    });
+  const { teams } = await fetchJson<IClientBaseballLeague>(url)
 
-  const team = val ? val.teams.find(t => t.id.toString() === teamId) : null;
+  const team = teams ? teams.find(t => t.id.toString() === teamId) : null;
 
   return new Response(
     JSON.stringify({

@@ -76,13 +76,13 @@ export function transformClientLeagueToBaseballLeagueV2(
   genericLeagueSettings: IFantasyLeague | null
 ): BaseballLeague {
 
-  if (!client) 
+  if (!client)
     throw new Error('Client league data is null');
 
-  if(!genericLeagueSettings)
+  if (!genericLeagueSettings)
     throw new Error('Generic league settings is null');
 
-  const teams = client.teams.map(t => clientLeagueTeamListToLeagueTeamList(t));
+  const teams = client.teams.map(t => clientLeagueTeamListToLeagueTeamList(t)).sort((a, b) => (a.currentRank) - (b.currentRank));
   const transactions = client.transactions ? client.transactions.map(t => transformTransactionToBaseballTransaction(t)) : [];
 
   return {
@@ -240,11 +240,11 @@ export function mapFangraphsPlayersToBaseballTeam(
   return espnPlayers?.map(player => {
     return fangraphsPlayerMap
       ? {
-          ...player,
-          fangraphsProjection: {
-            ...(fangraphsPlayerMap[player.sportsUiId] as object),
-          },
-        }
+        ...player,
+        fangraphsProjection: {
+          ...(fangraphsPlayerMap[player.sportsUiId] as object),
+        },
+      }
       : null;
   });
 }
@@ -253,11 +253,11 @@ export function mapBaseballTeamToFangraphsPlayers(espnPlayers: BaseballPlayerEnt
   return espnPlayers?.map(player => {
     return fangraphsPlayerMap
       ? {
-          ...player,
-          fangraphsProjection: {
-            ...(fangraphsPlayerMap[player.sportsUiId] as object),
-          },
-        }
+        ...player,
+        fangraphsProjection: {
+          ...(fangraphsPlayerMap[player.sportsUiId] as object),
+        },
+      }
       : null;
   });
 }

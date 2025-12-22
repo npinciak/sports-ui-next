@@ -24,51 +24,35 @@ export default async function Page({ params }: PageProps) {
               <ul className="list-disc list-inside">
                 {data.teams.map(team => (
                   <li key={team.id}>
+
                     <Link href={`/baseball/${year}/league/${leagueId}/team/${team.id}`} className="text-blue-600 hover:underline hover:cursor-pointer">
                       {team.name}
                     </Link>
+                    {team.totalPoints ?? '-'}
                   </li>
                 ))}
               </ul>
             </div>
           </CardContent>
         </Card>
-
-
       </div>
-      <div className="w-full mt-4  xs:flex-col flex flex-row gap-4">
-        <Card className="w-25 xs:w-full">
+      <div className="w-full mt-4 flex flex-col sm:flex-row gap-4">
+        <Card className="flex-1 w-full">
           <CardHeader>
-            <CardTitle>s</CardTitle>
+            <CardTitle>Widget A</CardTitle>
           </CardHeader>
           <CardContent>
 
           </CardContent>
         </Card>
-        <Card className="w-25 xs:w-full">
+        <Card className="flex-1 w-full">
           <CardHeader>
-            <CardTitle></CardTitle>
+            <CardTitle>Widget B</CardTitle>
           </CardHeader>
           <CardContent>
 
           </CardContent>
         </Card>
-        <Card className="w-25 xs:w-full" >
-          <CardHeader>
-            <CardTitle></CardTitle>
-          </CardHeader>
-          <CardContent>
-
-          </CardContent>
-        </Card>
-        <Card className="w-25 xs:w-full">
-          <CardHeader>
-            <CardTitle></CardTitle>
-          </CardHeader>
-          <CardContent>
-
-          </CardContent>
-        </Card>
-      </div >
+      </div>
     </>);
 }
