@@ -1,8 +1,29 @@
 import { configureStore } from '@reduxjs/toolkit';
+import {
+  BaseballEventsReducer,
+  BaseballEventsSliceName,
+  BaseballLeagueReducer,
+  BaseballLeagueSliceName,
+  BaseballPlayersReducer,
+  BaseballPlayersSliceName,
+  BaseballTeamReducer,
+  BaseballTeamRosterReducer,
+  BaseballTeamRosterSliceName,
+  BaseballTeamSliceName,
+  BaseballTransactionReducer,
+  BaseballTransactionSliceName,
+} from './features/baseball';
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {
+      [BaseballEventsSliceName]: BaseballEventsReducer,
+      [BaseballLeagueSliceName]: BaseballLeagueReducer,
+      [BaseballTeamSliceName]: BaseballTeamReducer,
+      [BaseballTeamRosterSliceName]: BaseballTeamRosterReducer,
+      [BaseballPlayersSliceName]: BaseballPlayersReducer,
+      [BaseballTransactionSliceName]: BaseballTransactionReducer,
+    },
   });
 };
 
