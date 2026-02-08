@@ -18,9 +18,9 @@ export interface BaseballPlayerEntity extends FantasyPlayerEntity {
 
 export interface BaseballPlayerStatsRowEntity
   extends
-  Omit<CommonPlayerEntity, 'teamId' | 'teamUid'>,
-  Pick<BaseballPlayerEntity, 'eligibleLineupSlots' | 'percentChange' | 'percentOwned' | 'percentStarted'>,
-  Pick<IClientTeamRosterEntity, 'lineupSlotId'> {
+    Omit<CommonPlayerEntity, 'teamId' | 'teamUid'>,
+    Pick<BaseballPlayerEntity, 'eligibleLineupSlots' | 'percentChange' | 'percentOwned' | 'percentStarted'>,
+    Pick<IClientTeamRosterEntity, 'lineupSlotId'> {
   highlightedPlayer: boolean;
   stats: Record<number, number>;
 }

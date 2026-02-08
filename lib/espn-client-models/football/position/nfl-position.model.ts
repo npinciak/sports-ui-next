@@ -18,4 +18,3 @@ export const enum ClientNflPosition {
   DST,
   EDR,
 }
-

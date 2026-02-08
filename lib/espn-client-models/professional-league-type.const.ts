@@ -15,4 +15,3 @@ export const PRO_LEAGUE_TYPE_BY_PRO_LEAGUE_ABBREV: Record<string, IClientProLeag
   NBA: IClientProLeagueType.NBA,
   NHL: IClientProLeagueType.NHL,
 } as const;
-

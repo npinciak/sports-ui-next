@@ -1,9 +1,4 @@
-import {
-  ClientTransaction,
-  ClientTransactionExecutionType,
-  ClientTransactionStatus,
-  TRANSACTION,
-} from '@/lib/espn-client-models';
+import { ClientTransaction, ClientTransactionExecutionType, ClientTransactionStatus, TRANSACTION } from '@/lib/espn-client-models';
 import { ClientBaseballLineupSlot } from '@/lib/espn-client-models/baseball';
 
 export interface BaseballTransactionEntity {

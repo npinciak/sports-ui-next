@@ -6,7 +6,7 @@ import { transformClientLeagueToBaseballLeagueV2 } from '@/lib/transformers/base
 import { clientLeagueToLeagueSettings } from '@/lib/transformers/fantasy-league.transformers';
 import { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest, context: { params: Promise<{ year: string; leagueId: string; }> }) {
+export async function GET(request: NextRequest, context: { params: Promise<{ year: string; leagueId: string }> }) {
   const { year, leagueId } = await context.params;
 
   const getLeague = FantasyBaseballEndpointBuilder.getLeague(year, leagueId);
@@ -19,15 +19,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ yea
 
   const leagueSettings = clientLeagueToLeagueSettings(league);
 
-  const baseballLeague = transformClientLeagueToBaseballLeagueV2(league, leagueSettings)
+  const baseballLeague = transformClientLeagueToBaseballLeagueV2(league, leagueSettings);
 
   return new Response(
     JSON.stringify({
       metadata: {
         url: url,
       },
-      data: baseballLeague
+      data: baseballLeague,
     })
   );
 }
-

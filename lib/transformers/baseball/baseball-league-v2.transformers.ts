@@ -75,14 +75,11 @@ export function transformClientLeagueToBaseballLeagueV2(
   client: IClientBaseballLeague | null,
   genericLeagueSettings: IFantasyLeague | null
 ): BaseballLeague {
+  if (!client) throw new Error('Client league data is null');
 
-  if (!client)
-    throw new Error('Client league data is null');
+  if (!genericLeagueSettings) throw new Error('Generic league settings is null');
 
-  if (!genericLeagueSettings)
-    throw new Error('Generic league settings is null');
-
-  const teams = client.teams.map(t => clientLeagueTeamListToLeagueTeamList(t)).sort((a, b) => (a.currentRank) - (b.currentRank));
+  const teams = client.teams.map(t => clientLeagueTeamListToLeagueTeamList(t)).sort((a, b) => a.currentRank - b.currentRank);
   const transactions = client.transactions ? client.transactions.map(t => transformTransactionToBaseballTransaction(t)) : [];
 
   return {
@@ -160,9 +157,13 @@ export function isPitcher(eligiblePos: number[], lineupSlotSet: Set<ClientBaseba
 export function clientLeagueTeamListToLeagueTeamList(team: IClientTeamEntity): BaseballTeamNoRosterEntity {
   const { abbrev, logo, valuesByStat, pointsByStat, name, tradeBlock, transactionCounter } = team;
 
-  const hasTradeablePlayers = tradeBlock.hasOwnProperty('players')
-    ? Object.values(tradeBlock.players as Record<string, ClientTradeBlockStatus>).some(p => p === TRADE_BLOCK_STATUS.ON_THE_BLOCK)
-    : false;
+  let hasTradeablePlayers = false;
+
+  if (tradeBlock) {
+    let hasTradeablePlayers = tradeBlock.hasOwnProperty('players')
+      ? Object.values(tradeBlock.players as Record<string, ClientTradeBlockStatus>).some(p => p === TRADE_BLOCK_STATUS.ON_THE_BLOCK)
+      : false;
+  }
 
   return {
     id: team.id.toString(),
@@ -240,11 +241,11 @@ export function mapFangraphsPlayersToBaseballTeam(
   return espnPlayers?.map(player => {
     return fangraphsPlayerMap
       ? {
-        ...player,
-        fangraphsProjection: {
-          ...(fangraphsPlayerMap[player.sportsUiId] as object),
-        },
-      }
+          ...player,
+          fangraphsProjection: {
+            ...(fangraphsPlayerMap[player.sportsUiId] as object),
+          },
+        }
       : null;
   });
 }
@@ -253,11 +254,11 @@ export function mapBaseballTeamToFangraphsPlayers(espnPlayers: BaseballPlayerEnt
   return espnPlayers?.map(player => {
     return fangraphsPlayerMap
       ? {
-        ...player,
-        fangraphsProjection: {
-          ...(fangraphsPlayerMap[player.sportsUiId] as object),
-        },
-      }
+          ...player,
+          fangraphsProjection: {
+            ...(fangraphsPlayerMap[player.sportsUiId] as object),
+          },
+        }
       : null;
   });
 }
