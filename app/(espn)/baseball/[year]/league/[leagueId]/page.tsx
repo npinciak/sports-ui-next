@@ -1,8 +1,7 @@
-import LeagueHeader from "@/components/espn/baseball/LeagueHeader";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { fetchJson } from "@/lib/helpers/http-requests";
-import { BaseballLeague } from "@/lib/models/baseball";
-import Link from "next/link";
+import { getBaseballLeague } from '@/app/actions/baseball/league';
+import LeagueHeader from '@/components/espn/baseball/LeagueHeader';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 interface PageProps {
   params: Promise<{ year: string; leagueId: string }>;
@@ -11,7 +10,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { year, leagueId } = await params;
 
-  const { data } = await fetchJson<{ metadata: { url: string }, data: BaseballLeague }>(`http://localhost:3000/api/espn/baseball/${year}/league/${leagueId}`)
+  const data = await getBaseballLeague(year, leagueId);
 
   return (
     <>
@@ -24,8 +23,10 @@ export default async function Page({ params }: PageProps) {
               <ul className="list-disc list-inside">
                 {data.teams.map(team => (
                   <li key={team.id}>
-
-                    <Link href={`/baseball/${year}/league/${leagueId}/team/${team.id}`} className="text-blue-600 hover:underline hover:cursor-pointer">
+                    <Link
+                      href={`/baseball/${year}/league/${leagueId}/team/${team.id}`}
+                      className="text-blue-600 hover:underline hover:cursor-pointer"
+                    >
                       {team.name}
                     </Link>
                     {team.totalPoints ?? '-'}
@@ -41,18 +42,15 @@ export default async function Page({ params }: PageProps) {
           <CardHeader>
             <CardTitle>Widget A</CardTitle>
           </CardHeader>
-          <CardContent>
-
-          </CardContent>
+          <CardContent></CardContent>
         </Card>
         <Card className="flex-1 w-full">
           <CardHeader>
             <CardTitle>Widget B</CardTitle>
           </CardHeader>
-          <CardContent>
-
-          </CardContent>
+          <CardContent></CardContent>
         </Card>
       </div>
-    </>);
+    </>
+  );
 }
