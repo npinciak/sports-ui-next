@@ -34,7 +34,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <StoreProvider>
           <Header />
+<<<<<<< HEAD
           <main className="container mx-auto ">{children}</main>
+=======
+          <main className="container mx-auto px-4 py-6 md:px-6 lg:px-8">{children}</main>
+>>>>>>> 13586e7 (Add better mobile view handling)
         </StoreProvider>
       </body>
     </html>
