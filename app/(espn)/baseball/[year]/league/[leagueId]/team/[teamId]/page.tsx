@@ -14,41 +14,39 @@ export default async function Page({ params }: PageProps) {
   );
 
   return (
-    <>
-      <div className="w-full">
-        <TeamHeader isLoading={false} leagueId={leagueId} team={data} />
-      </div>
-      <div className="w-full mt-4 flex flex-col sm:flex-row gap-4">
-        <Card className="flex-1 w-full">
+    <div className="space-y-4">
+      <TeamHeader isLoading={false} leagueId={leagueId} team={data} />
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
           <CardHeader>
             <CardTitle>Widget A</CardTitle>
           </CardHeader>
           <CardContent>Widget A content</CardContent>
         </Card>
-        <Card className="flex-1 w-full">
+        <Card>
           <CardHeader>
             <CardTitle>Widget B</CardTitle>
           </CardHeader>
           <CardContent>Widget B content</CardContent>
         </Card>
       </div>
-      <div className="w-full mt-4 flex flex-col sm:flex-row gap-4">
-        <Card className="flex-1 w-full">
-          <CardHeader>
-            <CardTitle>Lineup</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <Card>
+        <CardHeader>
+          <CardTitle>Lineup</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
             {data.roster.map(player => (
-              <div key={player.id} className="mb-2">
+              <div key={player.id} className="rounded-lg border p-3">
                 <p className="font-medium">{player.name}</p>
-                <p className="text-sm text-gray-600">
-                  {player.team}, {player.position}
+                <p className="text-sm text-muted-foreground">
+                  {player.team} • {player.position}
                 </p>
               </div>
             ))}
-          </CardContent>
-        </Card>
-      </div>
-    </>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

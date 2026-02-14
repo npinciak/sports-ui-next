@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useLeagueInfo } from '@/lib/features/baseball/hooks/leagueInfo.hook';
 import { BaseballImageHelper } from '@/lib/helpers';
 import { IFantasyLeague } from '@/lib/models/fantasy-league.model';
 
@@ -12,6 +13,8 @@ interface LeagueHeaderProps {
 }
 
 export default function LeagueHeader({ isLoading, league }: LeagueHeaderProps) {
+  useLeagueInfo(league);
+
   if (!league && !isLoading) return null;
 
   const leagueName = league?.name || null;
@@ -26,34 +29,36 @@ export default function LeagueHeader({ isLoading, league }: LeagueHeaderProps) {
 
   return (
     <Card className="mb-4">
-      <CardContent>
-        <div className="flex flex-col md:flex-row xs:items-center">
+      <CardContent className="pt-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center">
           {isLoading ? (
-            <Skeleton />
+            <Skeleton className="h-20 w-20 rounded-md md:h-22 md:w-22" />
           ) : (
-            <div style={{ width: 88, height: 88 }} className="relative rounded-md overflow-hidden bg-gray-200">
-              <img src={BaseballImageHelper.fantasySportLeagueImage} alt={leagueName ?? '-'} className="w-full h-full object-cover" />
+            <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-gray-200 md:h-22 md:w-22">
+              <img src={BaseballImageHelper.fantasySportLeagueImage} alt={leagueName ?? '-'} className="h-full w-full object-cover" />
             </div>
           )}
 
-          <div className="flex flex-col mt-4 md:ml-4">
+          <div className="flex flex-1 flex-col gap-1">
             {!isLoading && (
               <>
-                <h1 className="text-xl font-bold">{leagueName}</h1>
-                <p className="text-sm text-gray-600">
+                <h1 className="text-lg font-bold md:text-xl">{leagueName}</h1>
+                <p className="text-xs text-muted-foreground md:text-sm">
                   {[year ?? '-', leagueType ?? '-', teamCount ?? '-', scoringPeriodId ?? '-'].filter(Boolean).join(' | ')}
                 </p>
               </>
             )}
           </div>
-          <div className="flex flex-col mt-4 md:ml-4">
+          <div className="flex-shrink-0">
             <a
               href={`https://fantasy.espn.com/baseball/league?leagueId=${league?.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
+              className="block"
             >
-              <Button variant="outline">View League Settings on ESPN</Button>
+              <Button variant="outline" size="sm" className="w-full md:w-auto">
+                View on ESPN
+              </Button>
             </a>
           </div>
         </div>
