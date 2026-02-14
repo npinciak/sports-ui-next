@@ -9,7 +9,9 @@ export const baseballTeamRosterAdapter = createEntityAdapter({
 export const baseballTeamRosterSlice = createSlice({
   name: 'baseballTeamRoster',
   initialState: baseballTeamRosterAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    setAll: baseballTeamRosterAdapter.setAll,
+  },
 });
 
 export const { reducer: BaseballTeamRosterReducer, name: BaseballTeamRosterSliceName } = baseballTeamRosterSlice;

@@ -8,7 +8,9 @@ export const baseballPlayersAdapter = createEntityAdapter({
 export const baseballPlayersSlice = createSlice({
   name: 'baseballPlayers',
   initialState: baseballPlayersAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    setAll: baseballPlayersAdapter.setAll,
+  },
 });
 
 export const { reducer: BaseballPlayersReducer, name: BaseballPlayersSliceName } = baseballPlayersSlice;
