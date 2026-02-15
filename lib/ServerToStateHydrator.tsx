@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 import { BaseballLeagueActions } from './features/baseball';
+import { FangraphsBattersActions } from './features/baseball/fangraphs-batters.slice';
+import { FangraphsPitchersActions } from './features/baseball/fangraphs-pitchers.slice';
 import { BaseballTeamRosterActions } from './features/baseball/roster.slice';
 import { useAppDispatch } from './hooks';
 import { BaseballLeague, BaseballPlayerEntity } from './models/baseball';
@@ -44,7 +46,15 @@ export default function ServerStateHydrator({
     if (teamRoster) {
       dispatch(BaseballTeamRosterActions.setAll(teamRoster));
     }
-  }, [dispatch, leagueInfo, teamRoster]);
+
+    if (fangraphsBattingLeaders) {
+      dispatch(FangraphsBattersActions.setAll(fangraphsBattingLeaders));
+    }
+
+    if (fangraphsPitchingLeaders) {
+      dispatch(FangraphsPitchersActions.setAll(fangraphsPitchingLeaders));
+    }
+  }, [dispatch, leagueInfo, teamRoster, fangraphsBattingLeaders, fangraphsPitchingLeaders]);
 
   return null;
 }

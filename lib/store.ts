@@ -10,6 +10,10 @@ import {
   BaseballTeamRosterSliceName,
   BaseballTransactionReducer,
   BaseballTransactionSliceName,
+  FangraphsBattersReducer,
+  FangraphsBattersSliceName,
+  FangraphsPitchersReducer,
+  FangraphsPitchersSliceName,
 } from './features/baseball';
 
 export const makeStore = () => {
@@ -20,6 +24,8 @@ export const makeStore = () => {
       [BaseballTeamRosterSliceName]: BaseballTeamRosterReducer,
       [BaseballPlayersSliceName]: BaseballPlayersReducer,
       [BaseballTransactionSliceName]: BaseballTransactionReducer,
+      [FangraphsBattersSliceName]: FangraphsBattersReducer,
+      [FangraphsPitchersSliceName]: FangraphsPitchersReducer,
     },
   });
 };
