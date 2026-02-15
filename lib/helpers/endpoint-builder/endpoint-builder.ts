@@ -11,6 +11,10 @@ export function EspnEndpointBuilder({ fantasySport }: EspnEndpointBuilderProps) 
       return `${this.espnFantasyEndpointV3}/games/${fantasySport}/seasons/${year}/segments/0/leagues/${leagueId}`;
     }
 
+    static getTeam(year: string, leagueId: string, teamId: string) {
+      return `${this.espnFantasyEndpointV3}/games/${fantasySport}/seasons/${year}/segments/0/leagues/${leagueId}/teams/${teamId}`;
+    }
+
     private static get baseEspnUrl(): string {
       const endpoint = process.env.ESPN_BASE as string | undefined;
 
