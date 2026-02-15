@@ -1,16 +1,20 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { BaseballTeamEntity } from '@/lib/models/baseball';
+import { BaseballLeagueSelectors } from '@/lib/features/baseball/selectors';
+import { useAppSelector } from '@/lib/hooks';
 
 interface TeamHeaderProps {
   isLoading: boolean;
-  leagueId: string | null;
-  team: BaseballTeamEntity | null;
+  teamId: string | null;
 }
 
-export default function TeamHeader({ isLoading, leagueId, team }: TeamHeaderProps) {
-  if (!team && !isLoading) return null;
+export default function TeamHeader({ isLoading, teamId }: TeamHeaderProps) {
+  if (!teamId) return null;
+
+  const team = useAppSelector(state => BaseballLeagueSelectors.getById(state, teamId));
 
   return (
     <Card className="mb-4">
@@ -41,7 +45,7 @@ export default function TeamHeader({ isLoading, leagueId, team }: TeamHeaderProp
           </div>
           <div className="flex-shrink-0">
             <a
-              href={`https://fantasy.espn.com/baseball/team?leagueId=${leagueId}&teamId=${team?.id}`}
+              // href={`https://fantasy.espn.com/baseball/team?leagueId=${team}&teamId=${team?.id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block"

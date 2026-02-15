@@ -1,5 +1,7 @@
 import { getBaseballLeague } from '@/app/actions/baseball/league';
 import LeagueHeader from '@/components/espn/baseball/LeagueHeader';
+import { RosterDropsConnected } from '@/components/espn/baseball/widgets/RosterDrops';
+import { TradeablePlayersCountConnected } from '@/components/espn/baseball/widgets/TradeablePlayersCount';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
@@ -35,18 +37,9 @@ export default async function Page({ params }: PageProps) {
         </CardContent>
       </Card>
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Widget A</CardTitle>
-          </CardHeader>
-          <CardContent></CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Widget B</CardTitle>
-          </CardHeader>
-          <CardContent></CardContent>
-        </Card>
+        <TradeablePlayersCountConnected />
+
+        <RosterDropsConnected />
       </div>
     </div>
   );

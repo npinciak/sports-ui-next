@@ -3,18 +3,15 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useLeagueInfo } from '@/lib/features/baseball/hooks/leagueInfo.hook';
 import { BaseballImageHelper } from '@/lib/helpers';
-import { IFantasyLeague } from '@/lib/models/fantasy-league.model';
+import { BaseballLeague } from '@/lib/models/baseball';
 
 interface LeagueHeaderProps {
   isLoading: boolean;
-  league: IFantasyLeague | null;
+  league: BaseballLeague | null;
 }
 
 export default function LeagueHeader({ isLoading, league }: LeagueHeaderProps) {
-  useLeagueInfo(league);
-
   if (!league && !isLoading) return null;
 
   const leagueName = league?.name || null;
