@@ -5,13 +5,21 @@ import { BaseballLeagueActions } from './features/baseball';
 import { BaseballTeamRosterActions } from './features/baseball/roster.slice';
 import { useAppDispatch } from './hooks';
 import { BaseballLeague, BaseballPlayerEntity } from './models/baseball';
+import { FangraphsPlayerStatEntity } from './models/fangraphs';
 
 interface ServerStateHydratorProps {
   leagueInfo?: BaseballLeague;
   teamRoster?: BaseballPlayerEntity[];
+  fangraphsBattingLeaders?: FangraphsPlayerStatEntity[];
+  fangraphsPitchingLeaders?: FangraphsPlayerStatEntity[];
 }
 
-export default function ServerStateHydrator({ leagueInfo, teamRoster }: ServerStateHydratorProps) {
+export default function ServerStateHydrator({
+  leagueInfo,
+  teamRoster,
+  fangraphsBattingLeaders,
+  fangraphsPitchingLeaders,
+}: ServerStateHydratorProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

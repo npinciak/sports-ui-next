@@ -1,17 +1,69 @@
 'use server';
 
 import { fetchJson } from '@/lib/helpers/http-requests';
+import { FangraphsPlayerStatEntity } from '@/lib/models/fangraphs';
+import { FangraphsPageOfResponse } from '@/lib/models/fangraphs/client.model';
 
-export async function getFangraphsBattingLeaders(year: string, leagueId: string): Promise<unknown> {
-  //   const getLeague = FantasyBaseballEndpointBuilder.getLeague(year, leagueId);
+export async function getFangraphsBattingLeaders(year: string): Promise<FangraphsPlayerStatEntity[]> {
+  const params = new URLSearchParams({
+    age: '',
+    pos: 'all',
+    stats: 'bat',
+    lg: 'all',
+    qual: '0',
+    season: year,
+    season1: year,
+    startdate: `${year}-03-01`,
+    enddate: `${year}-11-01`,
+    month: '0',
+    hand: '',
+    team: '0,ts',
+    pageitems: '30',
+    pagenum: '1',
+    ind: '0',
+    rost: '0',
+    players: '0',
+    type: '8',
+    postseason: '',
+    sortdir: 'default',
+    sortstat: 'WAR',
+  });
 
-  //   const params = EspnParamsBuilder.forLeague().build();
+  const url = `https://www.fangraphs.com/api/leaders/major-league/data?${params.toString()}`;
 
-  //   const url = `${getLeague}?${params.toString()}`;
+  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsPlayerStatEntity>>(url);
 
-  const { data } = await fetchJson<{ data: unknown }>(
-    'https://www.fangraphs.com/api/leaders/major-league/data?age=&pos=all&stats=bat&lg=all&qual=0&season=2025&season1=2025&startdate=2025-03-01&enddate=2025-11-01&month=0&hand=&team=0%2Cts&pageitems=30&pagenum=1&ind=0&rost=0&players=0&type=8&postseason=&sortdir=default&sortstat=WAR'
-  );
+  return data;
+}
+
+export async function getFangraphsPitchingLeaders(year: string): Promise<FangraphsPlayerStatEntity[]> {
+  const params = new URLSearchParams({
+    age: '',
+    pos: 'all',
+    stats: 'pit',
+    lg: 'all',
+    qual: '0',
+    season: year,
+    season1: year,
+    startdate: `${year}-03-01`,
+    enddate: `${year}-11-01`,
+    month: '0',
+    hand: '',
+    team: '0,ts',
+    pageitems: '30',
+    pagenum: '1',
+    ind: '0',
+    rost: '0',
+    players: '0',
+    type: '8',
+    postseason: '',
+    sortdir: 'default',
+    sortstat: 'WAR',
+  });
+
+  const url = `https://www.fangraphs.com/api/leaders/major-league/data?${params.toString()}`;
+
+  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsPlayerStatEntity>>(url);
 
   return data;
 }
