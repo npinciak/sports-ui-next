@@ -6,10 +6,8 @@ import {
   BaseballLeagueSliceName,
   BaseballPlayersReducer,
   BaseballPlayersSliceName,
-  BaseballTeamReducer,
   BaseballTeamRosterReducer,
   BaseballTeamRosterSliceName,
-  BaseballTeamSliceName,
   BaseballTransactionReducer,
   BaseballTransactionSliceName,
 } from './features/baseball';
@@ -19,7 +17,6 @@ export const makeStore = () => {
     reducer: {
       [BaseballEventsSliceName]: BaseballEventsReducer,
       [BaseballLeagueSliceName]: BaseballLeagueReducer,
-      [BaseballTeamSliceName]: BaseballTeamReducer,
       [BaseballTeamRosterSliceName]: BaseballTeamRosterReducer,
       [BaseballPlayersSliceName]: BaseballPlayersReducer,
       [BaseballTransactionSliceName]: BaseballTransactionReducer,
