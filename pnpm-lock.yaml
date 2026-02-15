@@ -2027,6 +2027,11 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 06f87fd (Add new shadcn components)
   cookie-signature@1.2.2:
     resolution: {integrity: sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==}
     engines: {node: '>=6.6.0'}
@@ -2035,10 +2040,19 @@ packages:
     resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
+<<<<<<< HEAD
+=======
+>>>>>>> de32fd2 (Add new shadcn components)
+>>>>>>> 06f87fd (Add new shadcn components)
   cookie@1.1.1:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
     engines: {node: '>=18'}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 06f87fd (Add new shadcn components)
   cors@2.8.6:
     resolution: {integrity: sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==}
     engines: {node: '>= 0.10'}
@@ -2052,6 +2066,10 @@ packages:
       typescript:
         optional: true
 
+<<<<<<< HEAD
+=======
+>>>>>>> de32fd2 (Add new shadcn components)
+>>>>>>> 06f87fd (Add new shadcn components)
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -6010,12 +6028,25 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
+<<<<<<< HEAD
   cookie-signature@1.2.2: {}
 
   cookie@0.7.2: {}
 
   cookie@1.1.1: {}
 
+=======
+<<<<<<< HEAD
+  cookie@1.1.1: {}
+
+=======
+  cookie-signature@1.2.2: {}
+
+  cookie@0.7.2: {}
+
+  cookie@1.1.1: {}
+
+>>>>>>> 06f87fd (Add new shadcn components)
   cors@2.8.6:
     dependencies:
       object-assign: 4.1.1
@@ -6030,6 +6061,10 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
+<<<<<<< HEAD
+=======
+>>>>>>> de32fd2 (Add new shadcn components)
+>>>>>>> 06f87fd (Add new shadcn components)
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
