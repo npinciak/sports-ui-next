@@ -4,6 +4,24 @@ import { fetchJson } from '@/lib/helpers/http-requests';
 import { FangraphsPlayerStatEntity } from '@/lib/models/fangraphs';
 import { FangraphsPageOfResponse } from '@/lib/models/fangraphs/client.model';
 
+export async function getFangraphsBattingProjections(): Promise<FangraphsPlayerStatEntity[]> {
+  const params = new URLSearchParams({
+    type: 'steamer',
+    stats: 'bat',
+    pos: 'all',
+    team: '0',
+    players: '0',
+    lg: 'all',
+    // z: Date.now().toString(),
+  });
+
+  const url = `https://www.fangraphs.com/api/projections?${params.toString()}`;
+
+  const data = await fetchJson<FangraphsPlayerStatEntity[]>(url);
+
+  return data;
+}
+
 export async function getFangraphsBattingLeaders(year: string): Promise<FangraphsPlayerStatEntity[]> {
   const params = new URLSearchParams({
     age: '',

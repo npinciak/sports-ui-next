@@ -1,5 +1,5 @@
 import { getBaseballLeague } from '@/app/actions/baseball';
-import { getFangraphsBattingLeaders, getFangraphsPitchingLeaders } from '@/app/actions/baseball/fangraphs';
+import { getFangraphsBattingProjections, getFangraphsPitchingLeaders } from '@/app/actions/baseball/fangraphs';
 import ServerStateHydrator from '@/lib/ServerToStateHydrator';
 
 interface LayoutProps {
@@ -11,7 +11,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   const { year, leagueId } = await params;
 
   const data = await getBaseballLeague(year, leagueId);
-  const fangraphsBatting = await getFangraphsBattingLeaders(year);
+  const fangraphsBatting = await getFangraphsBattingProjections();
   const fangraphsPitching = await getFangraphsPitchingLeaders(year);
 
   return (
