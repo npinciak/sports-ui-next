@@ -32,12 +32,12 @@ export default async function Home() {
           </p>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <Link href="/baseball/2025/league/1463168196">
-            <Button variant="outline">Go to Sample League 1463168196 for 2025</Button>
+          <Link href="/leagues">
+            <Button variant="outline">Go to My Leagues</Button>
           </Link>
 
-          <Link href="baseball/2025/league/1463168196/team/5">
-            <Button variant="outline">Go to Sample Team 5 for 2025</Button>
+          <Link href="/teams">
+            <Button variant="outline">Go to My Teams</Button>
           </Link>
         </div>
       </main>

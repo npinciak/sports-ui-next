@@ -8,7 +8,12 @@ export default async function Page() {
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-bold mb-6">My Teams</h1>
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">My Teams</h1>
+        <Link href="/leagues" className="text-sm text-muted-foreground underline underline-offset-4">
+          View Leagues
+        </Link>
+      </div>
       {teams.length === 0 ? (
         <p className="text-muted-foreground">No teams found.</p>
       ) : (
