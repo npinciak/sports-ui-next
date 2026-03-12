@@ -1,8 +1,9 @@
 import { IClientPlayerRatingsMapByTimePeriod, IClientTeamRosterEntity } from '@/lib/espn-client-models';
 import { PlayerCompetitionStatus } from '@/lib/injury';
 import { CommonPlayerEntity } from '../common-player.model';
+import { FangraphsPlayerProjectionEntity } from '../fangraphs';
+import { FangraphsBatterStatsEntity, FangraphsPitcherStatsEntity } from '../fangraphs/player-stats.model';
 import { FantasyPlayerEntity } from '../fantasy-player.model';
-import { FangraphsPlayerProjectionEntity } from './player-projections.model';
 
 export interface BaseballPlayerEntity extends FantasyPlayerEntity {
   lineupSlotId: number;
@@ -25,6 +26,14 @@ export interface BaseballPlayerStatsRowEntity
   stats: Record<number, number>;
 }
 
-export interface BaseballPlayerWithFangraphsEntity extends BaseballPlayerEntity {
+export interface BaseballPlayerWithFangraphsProjections extends BaseballPlayerEntity {
   fangraphsProjection: FangraphsPlayerProjectionEntity | null;
+}
+
+export interface BatterWithFangraphsStats extends BaseballPlayerEntity {
+  fangraphsStats: FangraphsBatterStatsEntity | null;
+}
+
+export interface PitcherWithFangraphsStats extends BaseballPlayerEntity {
+  fangraphsStats: FangraphsPitcherStatsEntity | null;
 }

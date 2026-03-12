@@ -1,4 +1,4 @@
-import { FangraphsPlayerStatEntity } from './player-stats.model';
+import { FangraphsBatterStatsEntity } from './player-stats.model';
 import { FANGRAPHS_POSITION, FangraphsPositionType } from './position.model';
 import { FangraphsProjection } from './projection-type.model';
 import { FangraphsTeam } from './team.model';
@@ -32,7 +32,7 @@ export type FangraphsPageOfResponse<T> = {
   totalCount: number;
 };
 
-export type FangraphsPageOfPlayerStats = FangraphsPageOfResponse<FangraphsPlayerStatEntity>;
+export type FangraphsPageOfPlayerStats = FangraphsPageOfResponse<FangraphsBatterStatsEntity>;
 
 export const FANGRAPHS_BOOLEAN_VALUES = {
   FALSE: '0',
@@ -79,7 +79,7 @@ function FangraphsBaseRequestBody() {
 
     private static readonly DEFAULT: {};
 
-    private static readonly currentSeason = new Date().getFullYear();
+    private static readonly currentSeason = 2025; // new Date().getFullYear();
 
     static get requestBody(): IClientFangraphsStatsRequestBodyBase {
       return {
