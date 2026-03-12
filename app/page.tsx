@@ -31,17 +31,13 @@ export default async function Home() {
             center.
           </p>
         </div>
-        <div className="flex w-full flex-col gap-4 text-base font-medium sm:w-auto sm:flex-row">
-          <Link href="/baseball/2026/league/1519484325" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full sm:w-auto">
-              Go to Sample League 1519484325 for 2026
-            </Button>
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <Link href="/leagues">
+            <Button variant="outline">Go to My Leagues</Button>
           </Link>
 
-          <Link href="baseball/2026/league/1519484325/team/4" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full sm:w-auto">
-              Go to Sample Team 4 for 2026
-            </Button>
+          <Link href="/teams">
+            <Button variant="outline">Go to My Teams</Button>
           </Link>
         </div>
       </main>
