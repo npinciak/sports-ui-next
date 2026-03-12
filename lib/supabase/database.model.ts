@@ -41,6 +41,44 @@ export type Database = {
         }
         Relationships: []
       }
+      leagues: {
+        Row: {
+          created_at: string
+          espn_league_id: number
+          id: string
+          league_name: string | null
+          sport: string
+          user_profile_id: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          espn_league_id: number
+          id?: string
+          league_name?: string | null
+          sport: string
+          user_profile_id: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          espn_league_id?: number
+          id?: string
+          league_name?: string | null
+          sport?: string
+          user_profile_id?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leagues_user_profile_id_fkey"
+            columns: ["user_profile_id"]
+            isOneToOne: false
+            referencedRelation: "user_profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       Leagues: {
         Row: {
           created_at: string | null
@@ -80,24 +118,30 @@ export type Database = {
           espn_league_id: number
           espn_league_team_id: number
           id: string
+          sport: string
           team_name: string | null
-          user_profile_id: string | null
+          user_profile_id: string
+          year: number
         }
         Insert: {
           created_at?: string
           espn_league_id: number
           espn_league_team_id: number
           id?: string
+          sport: string
           team_name?: string | null
-          user_profile_id?: string | null
+          user_profile_id: string
+          year: number
         }
         Update: {
           created_at?: string
           espn_league_id?: number
           espn_league_team_id?: number
           id?: string
+          sport?: string
           team_name?: string | null
-          user_profile_id?: string | null
+          user_profile_id?: string
+          year?: number
         }
         Relationships: [
           {
@@ -115,6 +159,7 @@ export type Database = {
           created_at: string
           id: string
           updated_at: string | null
+          user_id: string | null
           user_name: string | null
         }
         Insert: {
@@ -122,6 +167,7 @@ export type Database = {
           created_at?: string
           id?: string
           updated_at?: string | null
+          user_id?: string | null
           user_name?: string | null
         }
         Update: {
@@ -129,6 +175,7 @@ export type Database = {
           created_at?: string
           id?: string
           updated_at?: string | null
+          user_id?: string | null
           user_name?: string | null
         }
         Relationships: []

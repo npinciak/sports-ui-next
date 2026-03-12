@@ -15,11 +15,13 @@ export default async function Page() {
         <ul className="flex flex-col gap-3">
           {teams.map(team => (
             <li key={team.id}>
-              <Link href={`/teams/${team.id}`}>
+              <Link href={`/${team.sport}/${team.year}/league/${team.espnLeagueId}/team/${team.espnLeagueTeamId}`}>
                 <Card className="hover:bg-accent active:scale-95 transition-all cursor-pointer">
                   <CardContent className="py-4 flex items-center justify-between">
                     <div>
                       <p className="font-semibold">{team.teamName ?? `Team ${team.espnLeagueTeamId}`}</p>
+                      <p className="text-sm text-muted-foreground">Sport: {team.sport}</p>
+                      <p className="text-sm text-muted-foreground">Year: {team.year}</p>
                       <p className="text-sm text-muted-foreground">League ID: {team.espnLeagueId}</p>
                     </div>
                     <ChevronRight className="text-muted-foreground shrink-0" />
