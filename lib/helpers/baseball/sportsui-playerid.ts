@@ -1,4 +1,5 @@
-import { BaseballPlayerEntity, FangraphsPlayerProjectionEntity } from '@/lib/models/baseball';
+import { BaseballPlayerEntity, BaseballPlayerWithFangraphsProjections } from '@/lib/models/baseball';
+import { FangraphsPlayerProjectionEntity } from '@/lib/models/fangraphs';
 import { normalizeName } from '../normalize-name';
 
 const FangraphsTeamToEspnTeam: Record<string, string> = {};
@@ -22,4 +23,9 @@ export function generateSportsUiPlayerId({ espnPlayer, fangraphsPlayer }: Genera
     normalizedEspnId,
     normalizedFangraphsId,
   };
+}
+
+export function transformFangraphIds(player: BaseballPlayerWithFangraphsProjections): number | null {
+  if (!player.fangraphsProjection) return null;
+  return Number(player.fangraphsProjection.playerid);
 }

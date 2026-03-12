@@ -30,15 +30,15 @@ export default function Home() {
           </p>
         </div>
         <div className="flex w-full flex-col gap-4 text-base font-medium sm:w-auto sm:flex-row">
-          <Link href="/baseball/2025/league/1463168196" className="w-full sm:w-auto">
+          <Link href="/baseball/2026/league/1519484325" className="w-full sm:w-auto">
             <Button variant="outline" className="w-full sm:w-auto">
-              Go to Sample League 1463168196 for 2025
+              Go to Sample League 1519484325 for 2026
             </Button>
           </Link>
 
-          <Link href="baseball/2025/league/1463168196/team/5" className="w-full sm:w-auto">
+          <Link href="baseball/2026/league/1519484325/team/4" className="w-full sm:w-auto">
             <Button variant="outline" className="w-full sm:w-auto">
-              Go to Sample Team 5 for 2025
+              Go to Sample Team 4 for 2026
             </Button>
           </Link>
         </div>

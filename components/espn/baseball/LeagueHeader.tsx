@@ -3,15 +3,15 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { BaseballImageHelper } from '@/lib/helpers';
 import { BaseballLeague } from '@/lib/models/baseball';
 
 interface LeagueHeaderProps {
   isLoading: boolean;
   league: BaseballLeague | null;
+  imageUrl?: string;
 }
 
-export default function LeagueHeader({ isLoading, league }: LeagueHeaderProps) {
+export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHeaderProps) {
   if (!league && !isLoading) return null;
 
   const leagueName = league?.name || null;
@@ -32,7 +32,7 @@ export default function LeagueHeader({ isLoading, league }: LeagueHeaderProps) {
             <Skeleton className="h-20 w-20 rounded-md md:h-22 md:w-22" />
           ) : (
             <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-gray-200 md:h-22 md:w-22">
-              <img src={BaseballImageHelper.fantasySportLeagueImage} alt={leagueName ?? '-'} className="h-full w-full object-cover" />
+              <img src={imageUrl} alt={leagueName ?? '-'} className="h-full w-full object-cover" />
             </div>
           )}
 

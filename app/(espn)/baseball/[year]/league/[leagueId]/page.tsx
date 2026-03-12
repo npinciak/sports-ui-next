@@ -3,6 +3,7 @@ import LeagueHeader from '@/components/espn/baseball/LeagueHeader';
 import { RosterDropsConnected } from '@/components/espn/baseball/widgets/RosterDrops';
 import { TradeablePlayersCountConnected } from '@/components/espn/baseball/widgets/TradeablePlayersCount';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { BaseballImageHelper } from '@/lib/helpers';
 import Link from 'next/link';
 
 interface PageProps {
@@ -16,7 +17,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="space-y-4">
-      <LeagueHeader isLoading={false} league={data} />
+      <LeagueHeader isLoading={false} league={data} imageUrl={BaseballImageHelper.fantasySportLeagueImage} />
       <Card>
         <CardHeader>
           <CardTitle>Teams</CardTitle>

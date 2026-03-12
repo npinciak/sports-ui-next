@@ -1,10 +1,11 @@
 'use server';
 
 import { fetchJson } from '@/lib/helpers/http-requests';
-import { FangraphsPlayerStatEntity } from '@/lib/models/fangraphs';
-import { FangraphsPageOfResponse } from '@/lib/models/fangraphs/client.model';
+import { FangraphsPlayerProjectionEntity } from '@/lib/models/fangraphs';
+import { FangraphsPageOfResponse, IClientFangraphsStatsRequestBodyBase } from '@/lib/models/fangraphs/client.model';
+import { FangraphsBatterStatsEntity, FangraphsPitcherStatsEntity } from '@/lib/models/fangraphs/player-stats.model';
 
-export async function getFangraphsBattingProjections(): Promise<FangraphsPlayerStatEntity[]> {
+export async function getFangraphsBattingProjections(): Promise<FangraphsPlayerProjectionEntity[]> {
   const params = new URLSearchParams({
     type: 'steamer',
     stats: 'bat',
@@ -17,71 +18,53 @@ export async function getFangraphsBattingProjections(): Promise<FangraphsPlayerS
 
   const url = `https://www.fangraphs.com/api/projections?${params.toString()}`;
 
-  const data = await fetchJson<FangraphsPlayerStatEntity[]>(url);
+  const data = await fetchJson<FangraphsPlayerProjectionEntity[]>(url);
 
   return data;
 }
 
-export async function getFangraphsBattingLeaders(year: string): Promise<FangraphsPlayerStatEntity[]> {
-  const params = new URLSearchParams({
-    age: '',
-    pos: 'all',
-    stats: 'bat',
-    lg: 'all',
-    qual: '0',
-    season: year,
-    season1: year,
-    startdate: `${year}-03-01`,
-    enddate: `${year}-11-01`,
-    month: '0',
-    hand: '',
-    team: '0,ts',
-    pageitems: '30',
-    pagenum: '1',
-    ind: '0',
-    rost: '0',
-    players: '0',
-    type: '8',
-    postseason: '',
-    sortdir: 'default',
-    sortstat: 'WAR',
-  });
+export async function getFangraphsBattingLeaders(req: IClientFangraphsStatsRequestBodyBase): Promise<FangraphsBatterStatsEntity[]> {
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(req)) {
+    params.append(key, value as string);
+  }
 
   const url = `https://www.fangraphs.com/api/leaders/major-league/data?${params.toString()}`;
 
-  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsPlayerStatEntity>>(url);
+  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsBatterStatsEntity>>(url);
 
   return data;
 }
 
-export async function getFangraphsPitchingLeaders(year: string): Promise<FangraphsPlayerStatEntity[]> {
+export async function getFangraphsPitchingProjections(): Promise<FangraphsPlayerProjectionEntity[]> {
   const params = new URLSearchParams({
-    age: '',
-    pos: 'all',
+    type: 'steamer',
     stats: 'pit',
-    lg: 'all',
-    qual: '0',
-    season: year,
-    season1: year,
-    startdate: `${year}-03-01`,
-    enddate: `${year}-11-01`,
-    month: '0',
-    hand: '',
-    team: '0,ts',
-    pageitems: '30',
-    pagenum: '1',
-    ind: '0',
-    rost: '0',
+    pos: 'all',
+    team: '0',
     players: '0',
-    type: '8',
-    postseason: '',
-    sortdir: 'default',
-    sortstat: 'WAR',
+    lg: 'all',
+    // z: Date.now().toString(),
   });
+
+  const url = `https://www.fangraphs.com/api/projections?${params.toString()}`;
+
+  const data = await fetchJson<FangraphsPlayerProjectionEntity[]>(url);
+
+  return data;
+}
+
+export async function getFangraphsPitchingLeaders(req: IClientFangraphsStatsRequestBodyBase): Promise<FangraphsPitcherStatsEntity[]> {
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(req)) {
+    params.append(key, value as string);
+  }
 
   const url = `https://www.fangraphs.com/api/leaders/major-league/data?${params.toString()}`;
 
-  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsPlayerStatEntity>>(url);
+  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsPitcherStatsEntity>>(url);
 
   return data;
 }

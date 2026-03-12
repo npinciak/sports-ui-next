@@ -1,5 +1,5 @@
 import { getBaseballLeague } from '@/app/actions/baseball';
-import { getFangraphsBattingProjections, getFangraphsPitchingLeaders } from '@/app/actions/baseball/fangraphs';
+import { getFangraphsBattingProjections, getFangraphsPitchingProjections } from '@/app/actions/baseball/fangraphs';
 import ServerStateHydrator from '@/lib/ServerToStateHydrator';
 
 interface LayoutProps {
@@ -12,16 +12,20 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   const data = await getBaseballLeague(year, leagueId);
   const fangraphsBatting = await getFangraphsBattingProjections();
-  const fangraphsPitching = await getFangraphsPitchingLeaders(year);
+  const fangraphsPitching = await getFangraphsPitchingProjections();
 
   return (
     <>
-      <ServerStateHydrator leagueInfo={data} fangraphsBattingLeaders={fangraphsBatting} fangraphsPitchingLeaders={fangraphsPitching} />
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-16   sm:px-8 bg-white dark:bg-black sm:items-start">
-          {children}
-        </main>
-      </div>
+      <ServerStateHydrator
+        leagueInfo={data}
+        fangraphsBattingProjections={fangraphsBatting}
+        fangraphsPitchingProjections={fangraphsPitching}
+      />
+      {/* <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black"> */}
+      {/* <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-16   sm:px-8 bg-white dark:bg-black sm:items-start"> */}
+      {children}
+      {/* </main> */}
+      {/* </div> */}
     </>
   );
 }
