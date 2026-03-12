@@ -1,8 +1,13 @@
 import { BASEBALL_LINEUP_MAP, ClientBaseballLineupSlot } from '@/lib/espn-client-models/baseball';
-import { benchPlayersFilter, startingPlayersFilter } from '@/lib/helpers/baseball';
+import { existsFilter } from '@/lib/helpers';
+import { benchPlayersFilter, startingPlayersFilter, transformFangraphIds } from '@/lib/helpers/baseball';
 import { RootState } from '@/lib/store';
 import { createSelector } from '@reduxjs/toolkit';
 import { rosterByEspnIdAdapter, rosterBySportsUiIdAdapter } from '../roster.slice';
+import { FangraphsBatterProjectionsSelectors } from './fangraphs-batters-projections.selector';
+import { FangraphsBatterStatsSelectors } from './fangraphs-batters-stats.selector';
+import { FangraphsPitcherProjectionsSelectors } from './fangraphs-pitcher-projections.selector';
+import { FangraphsPitcherStatsSelectors } from './fangraphs-pitcher-stats.selector';
 
 const rosterState = (state: RootState) => state.baseballTeamRoster;
 
@@ -78,23 +83,65 @@ export const selectTeamBenchPitcherList = createSelector([selectTeamPitcherList]
 //   benchPlayers.filter(player => player.isStarting)
 // );
 
-// export const selectFangraphsToBatters = createSelector(
-//   [selectTeamBatterList, selectFangraphsBatterEntities, selectFangraphsBatterTotal],
-//   (players, fangraphsEntities, totalFangraphsPlayers) => {
-//     const hasFangraphsPlayers = totalFangraphsPlayers > 0;
+export const selectFangraphsToBatters = createSelector([selectTeamBatterList, (state: RootState) => state], (players, state) => {
+  const hasFangraphsPlayers = FangraphsBatterProjectionsSelectors.selectTotal(state) > 0;
 
-//     return players?.map(player => ({
-//       ...player,
-//       fangraphsProjection: hasFangraphsPlayers ? (fangraphsEntities[player.sportsUiId] as FangraphsPlayerProjectionEntity) : null,
-//     }));
-//   }
-// );
+  return players?.map(player => ({
+    ...player,
+    fangraphsProjection: hasFangraphsPlayers ? FangraphsBatterProjectionsSelectors.selectById(state, player.sportsUiId) : null,
+    fangraphsStats: hasFangraphsPlayers ? FangraphsBatterStatsSelectors.selectById(state, player.sportsUiId) : null,
+    // fangraphsProjection: hasFangraphsPlayers ? (fangraphsEntities[player.sportsUiId] as FangraphsPlayerProjectionEntity) : null,
+  }));
+});
 
-// export const selectStartingBatterFangraphIds = createSelector([selectFangraphsToBatters], players => {
-//   const playerIds = players.map(p => transformFangraphIds(p));
+export const selectFangraphsToPitchers = createSelector([selectTeamPitcherList, (state: RootState) => state], (players, state) => {
+  const hasFangraphsPlayers = FangraphsPitcherProjectionsSelectors.selectTotal(state) > 0;
 
-//   return existsFilter(playerIds);
-// });
+  return players?.map(player => ({
+    ...player,
+    fangraphsProjection: hasFangraphsPlayers ? FangraphsPitcherProjectionsSelectors.selectById(state, player.sportsUiId) : null,
+    fangraphsStats: hasFangraphsPlayers ? FangraphsPitcherStatsSelectors.selectById(state, player.sportsUiId) : null,
+  }));
+});
+
+export const selectStartingBatterFangraphIds = createSelector([selectFangraphsToBatters], players => {
+  const playerIds = players.map(p => transformFangraphIds(p));
+
+  return existsFilter(playerIds);
+});
+
+export const selectPitcherFangraphIds = createSelector([selectFangraphsToPitchers], players => {
+  const playerIds = players.map(p => transformFangraphIds(p));
+
+  return existsFilter(playerIds);
+});
+
+export const selectBattersFangraphsStats = createSelector([selectTeamBatterList, (state: RootState) => state], (players, state) =>
+  players.map(player => {
+    return {
+      ...player,
+      fangraphsStats: FangraphsBatterStatsSelectors.selectById(state, player.sportsUiId) ?? null,
+    };
+  })
+);
+
+export const selectBattersFangraphsProjections = createSelector([selectTeamBatterList, (state: RootState) => state], (players, state) =>
+  players.map(player => {
+    return {
+      ...player,
+      fangraphsProjections: FangraphsBatterProjectionsSelectors.selectById(state, player.sportsUiId) ?? null,
+    };
+  })
+);
+
+export const selectPitchersFangraphsStats = createSelector([selectTeamPitcherList, (state: RootState) => state], (players, state) =>
+  players.map(player => {
+    return {
+      ...player,
+      fangraphsStats: FangraphsPitcherStatsSelectors.selectById(state, player.sportsUiId) ?? null,
+    };
+  })
+);
 
 // export const selectFangraphsToPitchers = createSelector(
 //   [selectTeamPitcherList, selectFangraphsPitcherEntities, selectFangraphsPitcherTotal],

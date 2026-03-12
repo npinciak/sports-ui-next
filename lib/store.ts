@@ -10,10 +10,14 @@ import {
   BaseballTeamRosterSliceName,
   BaseballTransactionReducer,
   BaseballTransactionSliceName,
-  FangraphsBattersReducer,
-  FangraphsBattersSliceName,
-  FangraphsPitchersReducer,
-  FangraphsPitchersSliceName,
+  FangraphsBatterProjectionsReducer,
+  FangraphsBatterProjectionsSliceName,
+  FangraphsBatterStatsReducer,
+  FangraphsBatterStatsSliceName,
+  FangraphsPitcherProjectionsReducer,
+  FangraphsPitcherProjectionsSliceName,
+  FangraphsPitcherStatsReducer,
+  FangraphsPitcherStatsSliceName,
 } from './features/baseball';
 
 export const makeStore = () => {
@@ -24,8 +28,10 @@ export const makeStore = () => {
       [BaseballTeamRosterSliceName]: BaseballTeamRosterReducer,
       [BaseballPlayersSliceName]: BaseballPlayersReducer,
       [BaseballTransactionSliceName]: BaseballTransactionReducer,
-      [FangraphsBattersSliceName]: FangraphsBattersReducer,
-      [FangraphsPitchersSliceName]: FangraphsPitchersReducer,
+      [FangraphsBatterStatsSliceName]: FangraphsBatterStatsReducer,
+      [FangraphsBatterProjectionsSliceName]: FangraphsBatterProjectionsReducer,
+      [FangraphsPitcherStatsSliceName]: FangraphsPitcherStatsReducer,
+      [FangraphsPitcherProjectionsSliceName]: FangraphsPitcherProjectionsReducer,
     },
   });
 };

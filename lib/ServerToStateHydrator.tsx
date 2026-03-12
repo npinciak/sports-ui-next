@@ -2,25 +2,32 @@
 
 import { useEffect } from 'react';
 import { BaseballLeagueActions } from './features/baseball';
-import { FangraphsBattersActions } from './features/baseball/fangraphs-batters.slice';
-import { FangraphsPitchersActions } from './features/baseball/fangraphs-pitchers.slice';
+import { FangraphsBatterProjectionsActions } from './features/baseball/fangraphs-batters-projections.slice';
+import { FangraphsBatterStatsActions } from './features/baseball/fangraphs-batters-stats.slice';
+import { FangraphsPitcherProjectionsActions } from './features/baseball/fangraphs-pitchers-projections.slice';
+import { FangraphsPitcherStatsActions } from './features/baseball/fangraphs-pitchers-stats.slice';
 import { BaseballTeamRosterActions } from './features/baseball/roster.slice';
 import { useAppDispatch } from './hooks';
 import { BaseballLeague, BaseballPlayerEntity } from './models/baseball';
-import { FangraphsPlayerStatEntity } from './models/fangraphs';
+import { FangraphsPlayerProjectionEntity } from './models/fangraphs';
+import { FangraphsBatterStatsEntity, FangraphsPitcherStatsEntity } from './models/fangraphs/player-stats.model';
 
 interface ServerStateHydratorProps {
   leagueInfo?: BaseballLeague;
   teamRoster?: BaseballPlayerEntity[];
-  fangraphsBattingLeaders?: FangraphsPlayerStatEntity[];
-  fangraphsPitchingLeaders?: FangraphsPlayerStatEntity[];
+  fangraphsBattingLeaders?: FangraphsBatterStatsEntity[];
+  fangraphsBattingProjections?: FangraphsPlayerProjectionEntity[];
+  fangraphsPitchingLeaders?: FangraphsPitcherStatsEntity[];
+  fangraphsPitchingProjections?: FangraphsPlayerProjectionEntity[];
 }
 
 export default function ServerStateHydrator({
   leagueInfo,
   teamRoster,
   fangraphsBattingLeaders,
+  fangraphsBattingProjections,
   fangraphsPitchingLeaders,
+  fangraphsPitchingProjections,
 }: ServerStateHydratorProps) {
   const dispatch = useAppDispatch();
 
@@ -43,18 +50,34 @@ export default function ServerStateHydrator({
       );
     }
 
-    if (teamRoster) {
+    if (teamRoster && teamRoster.length > 0) {
       dispatch(BaseballTeamRosterActions.setAll(teamRoster));
     }
 
-    if (fangraphsBattingLeaders) {
-      dispatch(FangraphsBattersActions.setAll(fangraphsBattingLeaders));
+    if (fangraphsBattingLeaders && fangraphsBattingLeaders.length > 0) {
+      dispatch(FangraphsBatterStatsActions.setAll(fangraphsBattingLeaders));
     }
 
-    if (fangraphsPitchingLeaders) {
-      dispatch(FangraphsPitchersActions.setAll(fangraphsPitchingLeaders));
+    if (fangraphsBattingProjections && fangraphsBattingProjections.length > 0) {
+      dispatch(FangraphsBatterProjectionsActions.setAll(fangraphsBattingProjections));
     }
-  }, [dispatch, leagueInfo, teamRoster, fangraphsBattingLeaders, fangraphsPitchingLeaders]);
+
+    if (fangraphsPitchingLeaders && fangraphsPitchingLeaders.length > 0) {
+      dispatch(FangraphsPitcherStatsActions.setAll(fangraphsPitchingLeaders));
+    }
+
+    if (fangraphsPitchingProjections && fangraphsPitchingProjections.length > 0) {
+      dispatch(FangraphsPitcherProjectionsActions.setAll(fangraphsPitchingProjections));
+    }
+  }, [
+    dispatch,
+    leagueInfo,
+    teamRoster,
+    fangraphsBattingLeaders,
+    fangraphsPitchingLeaders,
+    fangraphsBattingProjections,
+    fangraphsPitchingProjections,
+  ]);
 
   return null;
 }

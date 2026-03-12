@@ -20,6 +20,13 @@ const getTeamsWithTradeablePlayersCount = createSelector([getTeamsWithTradeableP
 
 const getTeamDropTotals = createSelector([selectAll], teams => teams.reduce((acc, team) => acc + team.transactionCounter.drops, 0));
 
+const getTeamDropTotalsTopThree = createSelector([selectAll], teams =>
+  teams
+    .map(team => ({ teamName: team.name, drops: team.transactionCounter.drops }))
+    .sort((a, b) => b.drops - a.drops)
+    .slice(0, 3)
+);
+
 const getTeamMoveToActive = createSelector([selectAll], teams =>
   teams.reduce((acc, team) => acc + team.transactionCounter.moveToActive, 0)
 );
@@ -32,6 +39,7 @@ export const BaseballLeagueSelectors = {
   getTeamsWithTradeablePlayers,
   getTeamsWithTradeablePlayersCount,
   getTeamDropTotals,
+  getTeamDropTotalsTopThree,
   getTeamMoveToActive,
   getTeamMoveToInjuredReserve,
 };

@@ -1,3 +1,4 @@
-export { FangraphsBattersSelectors } from './fangraphs-batters.selector';
-export { FangraphsPitchersSelectors } from './fangraphs-pitchers.selector';
+export { FangraphsBatterProjectionsSelectors } from './fangraphs-batters-projections.selector';
+export { FangraphsBatterStatsSelectors } from './fangraphs-batters-stats.selector';
+
 export { BaseballLeagueSelectors } from './league.selector';
