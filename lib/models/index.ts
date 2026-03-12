@@ -5,3 +5,4 @@ export * from './common-position.model';
 export * from './common-stats.model';
 export * from './common-team.model';
 export * from './filter.model';
+export * from './user-team.model';
