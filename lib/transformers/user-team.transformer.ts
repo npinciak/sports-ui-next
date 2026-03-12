@@ -7,6 +7,8 @@ export function transformClientUserTeamToUserTeam(clientUserTeam: Database['publ
     espnLeagueId: clientUserTeam.espn_league_id,
     espnLeagueTeamId: clientUserTeam.espn_league_team_id,
     teamName: clientUserTeam.team_name,
+    sport: clientUserTeam.sport,
+    year: clientUserTeam.year,
     userProfileId: clientUserTeam.user_profile_id,
     createdAt: clientUserTeam.created_at,
   };
