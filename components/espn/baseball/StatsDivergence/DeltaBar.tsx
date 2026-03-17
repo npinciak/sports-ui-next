@@ -1,4 +1,9 @@
-export default function DeltaBar({ delta, maxDelta = 0.06 }) {
+interface DeltaBarProps {
+  delta: number;
+  maxDelta?: number;
+}
+
+export default function DeltaBar({ delta, maxDelta = 0.06 }: DeltaBarProps) {
   const pct = Math.min(Math.abs(delta) / maxDelta, 1) * 100;
   const isPos = delta > 0;
   return (
@@ -34,11 +39,11 @@ export default function DeltaBar({ delta, maxDelta = 0.06 }) {
   );
 }
 
-function getDelta(actual, expected) {
+function getDelta(actual: number, expected: number) {
   return actual - expected;
 }
 
-function getDeltaLabel(delta, metric) {
+function getDeltaLabel(delta: number, metric: string) {
   const abs = Math.abs(delta);
   const threshold = metric === 'wOBA' ? 0.015 : metric === 'SLG' ? 0.025 : 0.015;
   if (abs < threshold * 0.5) return 'neutral';
