@@ -67,7 +67,7 @@ export default function ListRow({ player, listIndex, onClick }: ListRowProps) {
               fontWeight: 700,
             }}
           >
-            {bestPitch.label} +{dec(bestPitch.rv, 1)}
+            {bestPitch.label} +{dec(bestPitch.runValue, 1)}
           </span>
         ) : (
           <span style={{ color: '#c8bfaa' }}>—</span>

@@ -12,12 +12,12 @@ export default function ScatterChart({ playerList, selected, hovered, setSelecte
   const name = selected || hovered;
   const focusP = name ? playerList.find(p => p.name === name) : null;
 
-  const maxStuff = Math.max(...playerList.map(p => p.stuffScore));
+  const maxStuff = Math.max(...playerList.map(p => p.stuffScore!));
   const maxReg = Math.max(...playerList.map(p => Math.abs(p.regScore)));
   const maxWAR = Math.max(...playerList.map(({ fangraphsStats }) => fangraphsStats?.WAR ?? 0));
 
   function toSVG(p: PitcherWithRegressionMetrics) {
-    const x = 28 + (p.stuffScore / (maxStuff * 1.12)) * 428;
+    const x = 28 + (p.stuffScore! / (maxStuff * 1.12)) * 428;
     const y = 18 + (0.5 - p.regScore / (Math.max(maxReg, 0.3) * 2.4)) * 320;
     return { x, y };
   }
@@ -118,7 +118,7 @@ export default function ScatterChart({ playerList, selected, hovered, setSelecte
               name="dot-g"
               onMouseEnter={() => setHovered(p.name)}
               onMouseLeave={() => setHovered(null)}
-              onClick={() => setSelected((s: string) => (s === p.name ? null : p.name))}
+              // onClick={() => setSelected((s: string) => (s === p.name ? null : p.name))}
             >
               {isHovered && <circle cx={x} cy={y} r={r + 9} fill={bestPitchColor} opacity={0.12} />}
               {selected === p.name && (

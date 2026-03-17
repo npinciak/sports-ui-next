@@ -27,8 +27,6 @@ export function FangraphsDataProvider({ children, enabled = true, showLoading = 
   const hasRosterData = batters.length > 0 || pitchers.length > 0;
   const shouldFetchProjections = enabled && hasRosterData;
 
-  console.log('👥 Roster data:', { battersCount: batters.length, pitchersCount: pitchers.length, hasRosterData });
-
   // Step 1: Load projections first to get the Fangraphs IDs (only after roster data is available)
   const { isLoading: isBattingProjectionsLoading, error: battingProjectionsError } = useFangraphsBattingProjections({
     enabled: shouldFetchProjections,
@@ -44,16 +42,6 @@ export function FangraphsDataProvider({ children, enabled = true, showLoading = 
   const projectionsLoaded = !isBattingProjectionsLoading && !isPitchingProjectionsLoading;
   const hasPlayerIds = mappedStartingBatterPlayerIds.length > 0 || mappedPitcherPlayerIds.length > 0;
 
-  console.log('📊 Projections state:', {
-    isBattingProjectionsLoading,
-    isPitchingProjectionsLoading,
-    projectionsLoaded,
-    shouldFetchProjections,
-  });
-  console.log('🏃‍♂️ Batter IDs:', mappedStartingBatterPlayerIds);
-  console.log('⚾ Pitcher IDs:', mappedPitcherPlayerIds);
-  console.log('✅ Can fetch stats:', projectionsLoaded && hasPlayerIds);
-
   // Step 3: Only fetch stats data after projections are loaded and we have IDs
   const shouldFetchStats = projectionsLoaded && hasPlayerIds;
 
@@ -63,8 +51,6 @@ export function FangraphsDataProvider({ children, enabled = true, showLoading = 
   const { isLoading: isPitchingLoading, error: pitchingError } = useFangraphsPitchingData(mappedPitcherPlayerIds, {
     enabled: enabled && shouldFetchStats,
   });
-
-  console.log('📈 Stats loading:', { isBattingLoading, isPitchingLoading });
 
   if (
     showLoading &&

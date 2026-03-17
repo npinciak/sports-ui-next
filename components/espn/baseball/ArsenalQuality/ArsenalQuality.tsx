@@ -8,7 +8,7 @@ import { PITCH_MAP } from './const';
 import Header from './Header';
 import ListView from './ListView';
 import MatrixView from './MatrixView';
-import { PitchArsenal } from './model';
+import { PitchArsenal, PitcherWithRegressionMetrics } from './model';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function getArsenal(p: FangraphsPitcherStatsEntity) {
@@ -70,9 +70,9 @@ export default function ArsenalRegressionMatrix() {
   const maxReg = Math.max(...processed.map(p => Math.abs(p.regScore)));
   const maxWAR = Math.max(...processed.map(({ fangraphsStats }) => fangraphsStats?.WAR ?? 0));
 
-  function toSVG(p) {
-    const x = 28 + (p.stuffScore / (maxStuff * 1.12)) * 428;
-    const y = 18 + (0.5 - p.regScore / (Math.max(maxReg, 0.3) * 2.4)) * 320;
+  function toSVG(p: PitcherWithRegressionMetrics) {
+    const x = 28 + (p.stuffScore! / (maxStuff * 1.12)) * 428;
+    const y = 18 + (0.5 - p.regScore! / (Math.max(maxReg, 0.3) * 2.4)) * 320;
     return { x, y };
   }
 

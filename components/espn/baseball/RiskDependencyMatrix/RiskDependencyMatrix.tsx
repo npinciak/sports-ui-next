@@ -1,5 +1,7 @@
 'use client';
 
+import { selectBattersFangraphsStats } from '@/lib/features/baseball/selectors/roster.selector';
+import { useAppSelector } from '@/lib/hooks';
 import { useMemo, useState } from 'react';
 
 const ROSTER = [
@@ -247,32 +249,34 @@ const QUADRANTS = [
 
 export default function RiskDependencyMatrix() {
   const [activeCategory, setActiveCategory] = useState('HR');
-  const [hoveredPlayer, setHoveredPlayer] = useState(null);
+  const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const [view, setView] = useState('matrix'); // matrix | list
 
+  const batterList = useAppSelector(selectBattersFangraphsStats);
+
   const processed = useMemo(() => {
-    return ROSTER.map(p => {
+    return batterList.map(p => {
       const divScore = getDivergenceScore(p);
-      const depScore = getCategoryDependency(p, activeCategory, ROSTER);
+      const depScore = getCategoryDependency(p, activeCategory, batterList);
       const action = getActionLabel(divScore, depScore);
       return { ...p, divScore, depScore, action };
     });
-  }, [activeCategory]);
+  }, [activeCategory, batterList]);
 
   const maxDep = Math.max(...processed.map(p => p.depScore));
   const maxDiv = Math.max(...processed.map(p => Math.abs(p.divScore)));
 
   // For scatter: x = dependency (0-100%), y = divergence (-max to +max)
-  function toX(dep) {
+  function toX(dep: number) {
     return (dep / (maxDep * 1.15)) * 100;
   }
-  function toY(div) {
+  function toY(div: number) {
     return 50 - (div / (maxDiv * 1.3)) * 50;
   }
 
   const sorted = [...processed].sort((a, b) => b.action.priority - a.action.priority || b.depScore - a.depScore);
 
-  const hovered = hoveredPlayer ? processed.find(p => p.Name === hoveredPlayer) : null;
+  const hovered = hoveredPlayer ? processed.find(p => p.fangraphsStats?.Name === hoveredPlayer) : null;
 
   return (
     <div
@@ -465,12 +469,12 @@ export default function RiskDependencyMatrix() {
               {processed.map((p, i) => {
                 const cx = 20 + toX(p.depScore) * 4.6;
                 const cy = toY(p.divScore) * 3.2 + 10;
-                const isHov = hoveredPlayer === p.Name;
+                const isHov = hoveredPlayer === p.fangraphsStats?.Name;
                 const isDim = hoveredPlayer && !isHov;
                 return (
                   <g
-                    key={p.Name}
-                    onMouseEnter={() => setHoveredPlayer(p.Name)}
+                    key={p.fangraphsStats?.Name}
+                    onMouseEnter={() => setHoveredPlayer(p.fangraphsStats?.Name)}
                     onMouseLeave={() => setHoveredPlayer(null)}
                     style={{ cursor: 'pointer' }}
                   >
@@ -494,7 +498,7 @@ export default function RiskDependencyMatrix() {
                         opacity={isDim ? 0.3 : 1}
                         style={{ transition: 'opacity 0.15s' }}
                       >
-                        {p.Name.split(' ')[1] || p.Name}
+                        {p.fangraphsStats?.Name.split(' ')[1] || p.fangraphsStats?.Name}
                       </text>
                     )}
                   </g>
@@ -507,7 +511,7 @@ export default function RiskDependencyMatrix() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {hovered ? (
               <div
-                key={hovered.Name}
+                key={hovered.fangraphsStats?.Name}
                 className="anim"
                 style={{
                   background: '#111111',
@@ -519,9 +523,9 @@ export default function RiskDependencyMatrix() {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
                   <div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: '#f9fafb' }}>{hovered.Name}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: '#f9fafb' }}>{hovered.fangraphsStats?.Name}</div>
                     <div style={{ fontSize: 11, color: '#6b7280', marginTop: 2 }}>
-                      {hovered.Team} · {hovered.Pos} · {hovered.PA} PA
+                      {hovered.fangraphsStats.Team} · {hovered.fangraphsStats.Pos} · {hovered.fangraphsStats.PA} PA
                     </div>
                   </div>
                   <span
@@ -543,9 +547,9 @@ export default function RiskDependencyMatrix() {
                 {/* xStats */}
                 <div style={{ fontSize: 10, color: '#4b5563', letterSpacing: '0.1em', marginBottom: 8 }}>XSTATS DIVERGENCE</div>
                 {[
-                  { label: 'wOBA', actual: hovered.wOBA, expected: hovered.xwOBA },
-                  { label: 'AVG', actual: hovered.AVG, expected: hovered.xAVG },
-                  { label: 'SLG', actual: hovered.SLG, expected: hovered.xSLG },
+                  { label: 'wOBA', actual: hovered.fangraphsStats.wOBA, expected: hovered.fangraphsStats.xwOBA },
+                  { label: 'AVG', actual: hovered.fangraphsStats.AVG, expected: hovered.fangraphsStats.xAVG },
+                  { label: 'SLG', actual: hovered.fangraphsStats.SLG, expected: hovered.fangraphsStats.xSLG },
                 ].map(m => {
                   const d = m.actual - m.expected;
                   const isPos = d > 0;
@@ -591,8 +595,8 @@ export default function RiskDependencyMatrix() {
                   </div>
                 </div>
                 <div style={{ fontSize: 11, color: '#6b7280', lineHeight: 1.5 }}>
-                  {hovered.Name.split(' ')[0]} accounts for <strong style={{ color: '#e5e7eb' }}>{hovered.depScore.toFixed(1)}%</strong> of
-                  your roster's {activeCategory} production.
+                  {hovered.fangraphsStats?.Name.split(' ')[0]} accounts for{' '}
+                  <strong style={{ color: '#e5e7eb' }}>{hovered.depScore.toFixed(1)}%</strong> of your roster's {activeCategory} production.
                 </div>
 
                 <div style={{ height: 1, background: '#27272a', margin: '12px 0' }} />
@@ -654,7 +658,7 @@ export default function RiskDependencyMatrix() {
 
           {sorted.map((p, i) => (
             <div
-              key={p.Name}
+              key={p.fangraphsStats?.Name}
               className="list-row"
               style={{
                 display: 'grid',
@@ -667,18 +671,25 @@ export default function RiskDependencyMatrix() {
               }}
             >
               <div>
-                <div style={{ fontSize: 13, fontWeight: 500, color: '#f9fafb' }}>{p.Name}</div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: '#f9fafb' }}>{p.fangraphsStats?.Name}</div>
                 <div style={{ fontSize: 10, color: '#4b5563', marginTop: 1 }}>
-                  {p.Team} · {p.PA} PA
+                  {p.fangraphsStats.Team} · {p.fangraphsStats.PA} PA
                 </div>
               </div>
-              <div style={{ fontSize: 11, color: '#6b7280' }}>{p.Pos}</div>
+              <div style={{ fontSize: 11, color: '#6b7280' }}>{p.fangraphsStats.Pos}</div>
               <div style={{ textAlign: 'right', fontSize: 13, fontWeight: 600, color: '#f9fafb' }}>
-                {activeCategory === 'AVG' ? p.AVG.toFixed(3) : `${p.depScore.toFixed(1)}%`}
+                {activeCategory === 'AVG' ? p.fangraphsStats.AVG.toFixed(3) : `${p.depScore.toFixed(1)}%`}
               </div>
-              <div style={{ textAlign: 'right', fontSize: 13, fontWeight: 600, color: p.wOBA - p.xwOBA > 0 ? '#f87171' : '#4ade80' }}>
-                {p.wOBA - p.xwOBA > 0 ? '+' : ''}
-                {(p.wOBA - p.xwOBA).toFixed(3)}
+              <div
+                style={{
+                  textAlign: 'right',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: p.fangraphsStats.wOBA - p.fangraphsStats.xwOBA > 0 ? '#f87171' : '#4ade80',
+                }}
+              >
+                {p.fangraphsStats.wOBA - p.fangraphsStats.xwOBA > 0 ? '+' : ''}
+                {(p.fangraphsStats.wOBA - p.fangraphsStats.xwOBA).toFixed(3)}
               </div>
               <div style={{ textAlign: 'right', fontSize: 13, color: p.divScore > 0 ? '#f87171' : '#4ade80' }}>
                 {p.divScore > 0 ? '+' : ''}
