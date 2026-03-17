@@ -5,7 +5,7 @@ import { EspnParamsBuilder } from '@/lib/helpers';
 import { FantasyBaseballEndpointBuilder } from '@/lib/helpers/endpoint-builder/endpoint-builder';
 import { fetchJson } from '@/lib/helpers/http-requests';
 import { BaseballLeague } from '@/lib/models/baseball/baseball-league.model';
-import { transformClientLeagueToBaseballLeagueV2 } from '@/lib/transformers/baseball/baseball-league-v2.transformers';
+import { transformClientLeagueToBaseballLeagueV2 } from '@/lib/transformers/baseball/league.transformers';
 import { clientLeagueToLeagueSettings } from '@/lib/transformers/fantasy-league.transformers';
 
 export async function getBaseballLeague(year: string, leagueId: string): Promise<BaseballLeague> {

@@ -2,7 +2,7 @@ import { IClientBaseballLeague } from '@/lib/espn-client-models/league.model';
 import { EspnParamsBuilder } from '@/lib/helpers';
 import { FantasyBaseballEndpointBuilder } from '@/lib/helpers/endpoint-builder/endpoint-builder';
 import { fetchJson } from '@/lib/helpers/http-requests';
-import { clientTeamToBaseballTeam } from '@/lib/transformers/baseball/baseball-league-v2.transformers';
+import { clientTeamToBaseballTeam } from '@/lib/transformers/baseball/league.transformers';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest, context: { params: Promise<{ year: string; leagueId: string; teamId: string }> }) {

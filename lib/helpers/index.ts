@@ -1,5 +1,6 @@
 export * from './endpoint-builder';
 export * from './espn-date-helper';
+export * from './exists';
 export * from './flatten-stats';
 export * from './image-builder';
 export * from './normalize-name';

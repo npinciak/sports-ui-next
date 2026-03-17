@@ -1,7 +1,7 @@
 import { IClientPlayerInfoEntity, IClientProLeagueType, IClientSimplePlayerEntity, PlayerOutlooksMap } from '@/lib/espn-client-models';
 import { ClientMlbPosition } from '@/lib/espn-client-models/baseball';
 import { IClientPlayerNewsFeedEntity } from '@/lib/espn-client-models/player-news-feed.model';
-import { flattenPlayerStats, generateTeamUid, ImageBuilder, normalizeName, SportLeague } from '@/lib/helpers';
+import { generateTeamUid, ImageBuilder, normalizeName, SportLeague } from '@/lib/helpers';
 import { INJURY_SEVERITY_BY_INJURY_STATUS, INJURY_STATUS_LIST, PLAYER_COMPETITION_STATUS } from '@/lib/injury';
 import { CommonPositionEntity } from '@/lib/models';
 import { FantasyPlayerNewsEntity } from '@/lib/models/fantasy-player-news-entity.model';
@@ -101,7 +101,7 @@ export function clientPlayerToFantasyPlayer({
   const { proTeamId, defaultPositionId, outlooks, id, fullName, ownership, lastNewsDate } = clientPlayer;
 
   const team = teamMap[proTeamId] as string;
-  const stats = flattenPlayerStats(clientPlayer.stats);
+  const stats = null; //Removed for Fangraphs stats flattenPlayerStats(clientPlayer.stats);
   const outlookByWeek = clientPlayerOutlook(outlooks);
   const injuryStatus = clientPlayer.injuryStatus ? clientPlayer.injuryStatus : PLAYER_COMPETITION_STATUS.Active;
   const league = sportLeagueMap[leagueId];

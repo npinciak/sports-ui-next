@@ -12,9 +12,8 @@ export interface ImageBuilderInput {
 
 export function ImageBuilder({ league, sport }: { league?: SportLeague; sport?: FantasySportsAbbreviation }) {
   return class ImageBuilderClass {
-    private static readonly _cdn = process.env.ESPN_CDN_A as string | undefined;
+    private static readonly _cdn = process.env.ESPN_CDN as string | undefined;
     private static readonly _cdnG = process.env.ESPN_CDN_G as string | undefined;
-    private static readonly _cdnCombiner = process.env.ESPN_CDN_COMBINER as string | undefined;
 
     private static _sport = sport;
     private static _league = league;
@@ -39,6 +38,13 @@ export function ImageBuilder({ league, sport }: { league?: SportLeague; sport?: 
 
     static get fantasySportLeagueImage() {
       return `${this._cdnG}/lm-static/${this._sport}/images/${this._sport}-shield-icon.svg`;
+    }
+
+    private static get _cdnCombiner() {
+      if (!this._cdnG) {
+        throw new Error('CDN URLs are not defined in environment variables');
+      }
+      return `${this._cdn}/combiner/i`;
     }
   };
 }
