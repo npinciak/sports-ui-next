@@ -41,14 +41,13 @@ export type Database = {
         }
         Relationships: []
       }
-      "league-progression": {
+      league_progression: {
         Row: {
           created_at: string
           espn_league_id: number | null
           espn_league_team_id: number | null
           id: number
           league_rank: number
-          team_id: string
           total_points: number
         }
         Insert: {
@@ -57,7 +56,6 @@ export type Database = {
           espn_league_team_id?: number | null
           id?: number
           league_rank: number
-          team_id: string
           total_points: number
         }
         Update: {
@@ -66,18 +64,9 @@ export type Database = {
           espn_league_team_id?: number | null
           id?: number
           league_rank?: number
-          team_id?: string
           total_points?: number
         }
-        Relationships: [
-          {
-            foreignKeyName: "league-progression_team_id_fkey"
-            columns: ["team_id"]
-            isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       leagues: {
         Row: {
