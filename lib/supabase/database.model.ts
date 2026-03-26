@@ -46,6 +46,7 @@ export type Database = {
           created_at: string
           espn_league_id: number | null
           espn_league_team_id: number | null
+          espn_scoring_period_id: number | null
           id: number
           league_rank: number
           total_points: number
@@ -54,6 +55,7 @@ export type Database = {
           created_at?: string
           espn_league_id?: number | null
           espn_league_team_id?: number | null
+          espn_scoring_period_id?: number | null
           id?: number
           league_rank: number
           total_points: number
@@ -62,6 +64,7 @@ export type Database = {
           created_at?: string
           espn_league_id?: number | null
           espn_league_team_id?: number | null
+          espn_scoring_period_id?: number | null
           id?: number
           league_rank?: number
           total_points?: number

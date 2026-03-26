@@ -10,6 +10,7 @@ export function transformClientLeagueProgressionToLeagueProgression(
     espnLeagueTeamId: clientLeagueProgression.espn_league_team_id,
     leagueRank: clientLeagueProgression.league_rank,
     totalPoints: clientLeagueProgression.total_points,
+    scoringPeriodId: clientLeagueProgression.espn_scoring_period_id,
     createdAt: clientLeagueProgression.created_at,
   };
 }

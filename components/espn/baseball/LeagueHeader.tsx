@@ -32,6 +32,7 @@ export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHead
         espn_league_team_id: team.id,
         league_rank: team.currentRank,
         total_points: team.totalPoints,
+        espn_scoring_period_id: league.scoringPeriodId,
         created_at: new Date().toISOString(),
       })) || [];
 

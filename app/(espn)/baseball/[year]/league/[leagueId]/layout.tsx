@@ -1,6 +1,7 @@
 import { getBaseballLeague } from '@/app/actions/baseball';
 import { getFangraphsBattingProjections, getFangraphsPitchingProjections } from '@/app/actions/baseball/fangraphs';
 import ServerStateHydrator from '@/lib/ServerToStateHydrator';
+import { getLeagueProgression } from '@/lib/supabase/queries/league-progression';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,12 +15,15 @@ export default async function Layout({ children, params }: LayoutProps) {
   const fangraphsBatting = await getFangraphsBattingProjections();
   const fangraphsPitching = await getFangraphsPitchingProjections();
 
+  const leagueProgression = await getLeagueProgression();
+
   return (
     <>
       <ServerStateHydrator
         leagueInfo={data}
         fangraphsBattingProjections={fangraphsBatting}
         fangraphsPitchingProjections={fangraphsPitching}
+        leagueProgression={leagueProgression}
       />
       {/* <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black"> */}
       {/* <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-16   sm:px-8 bg-white dark:bg-black sm:items-start"> */}

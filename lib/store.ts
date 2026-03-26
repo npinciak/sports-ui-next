@@ -18,6 +18,8 @@ import {
   FangraphsPitcherProjectionsSliceName,
   FangraphsPitcherStatsReducer,
   FangraphsPitcherStatsSliceName,
+  LeagueProgressionReducer,
+  LeagueProgressionSliceName,
 } from './features/baseball';
 
 export const makeStore = () => {
@@ -28,6 +30,7 @@ export const makeStore = () => {
       [BaseballTeamRosterSliceName]: BaseballTeamRosterReducer,
       [BaseballPlayersSliceName]: BaseballPlayersReducer,
       [BaseballTransactionSliceName]: BaseballTransactionReducer,
+      [LeagueProgressionSliceName]: LeagueProgressionReducer,
       [FangraphsBatterStatsSliceName]: FangraphsBatterStatsReducer,
       [FangraphsBatterProjectionsSliceName]: FangraphsBatterProjectionsReducer,
       [FangraphsPitcherStatsSliceName]: FangraphsPitcherStatsReducer,
