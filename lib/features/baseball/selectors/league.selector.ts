@@ -12,6 +12,8 @@ const getById = (state: RootState, id: string | null | undefined) => {
   return selectById(state, id);
 };
 
+const getFinalScoringPeriodIdAsNumber = createSelector([baseballLeagueState], league => Number(league.finalScoringPeriod));
+
 const getTeamsWithTradeablePlayers = createSelector([selectAll], teams =>
   teams.filter(team => team.hasTradeablePlayers).map(({ name, id }) => ({ name, id }))
 );
@@ -42,4 +44,5 @@ export const BaseballLeagueSelectors = {
   getTeamDropTotalsTopThree,
   getTeamMoveToActive,
   getTeamMoveToInjuredReserve,
+  getFinalScoringPeriodIdAsNumber,
 };

@@ -4,7 +4,7 @@ import { FantasyBaseballEndpointBuilder } from '@/lib/helpers/endpoint-builder/e
 import { fetchJson } from '@/lib/helpers/http-requests';
 import { transformClientLeagueToBaseballLeagueV2 } from '@/lib/transformers/baseball/league.transformers';
 import { clientLeagueToLeagueSettings } from '@/lib/transformers/fantasy-league.transformers';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest, context: { params: Promise<{ year: string; leagueId: string }> }) {
   const { year, leagueId } = await context.params;
@@ -21,12 +21,10 @@ export async function GET(request: NextRequest, context: { params: Promise<{ yea
 
   const baseballLeague = transformClientLeagueToBaseballLeagueV2(league, leagueSettings);
 
-  return new Response(
-    JSON.stringify({
-      metadata: {
-        url: url,
-      },
-      data: baseballLeague,
-    })
-  );
+  return NextResponse.json({
+    metadata: {
+      url: url,
+    },
+    data: baseballLeague,
+  });
 }

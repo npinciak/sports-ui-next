@@ -41,11 +41,42 @@ export type Database = {
         }
         Relationships: []
       }
+      league_progression: {
+        Row: {
+          created_at: string
+          espn_league_id: number | null
+          espn_league_team_id: number | null
+          espn_scoring_period_id: number | null
+          id: number
+          league_rank: number
+          total_points: number
+        }
+        Insert: {
+          created_at?: string
+          espn_league_id?: number | null
+          espn_league_team_id?: number | null
+          espn_scoring_period_id?: number | null
+          id?: number
+          league_rank: number
+          total_points: number
+        }
+        Update: {
+          created_at?: string
+          espn_league_id?: number | null
+          espn_league_team_id?: number | null
+          espn_scoring_period_id?: number | null
+          id?: number
+          league_rank?: number
+          total_points?: number
+        }
+        Relationships: []
+      }
       leagues: {
         Row: {
           created_at: string
           espn_league_id: number
           id: string
+          is_active: boolean
           league_name: string | null
           sport: string
           user_profile_id: string
@@ -55,6 +86,7 @@ export type Database = {
           created_at?: string
           espn_league_id: number
           id?: string
+          is_active?: boolean
           league_name?: string | null
           sport: string
           user_profile_id: string
@@ -64,6 +96,7 @@ export type Database = {
           created_at?: string
           espn_league_id?: number
           id?: string
+          is_active?: boolean
           league_name?: string | null
           sport?: string
           user_profile_id?: string

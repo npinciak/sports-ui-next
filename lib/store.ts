@@ -18,7 +18,10 @@ import {
   FangraphsPitcherProjectionsSliceName,
   FangraphsPitcherStatsReducer,
   FangraphsPitcherStatsSliceName,
+  LeagueProgressionReducer,
+  LeagueProgressionSliceName,
 } from './features/baseball';
+import { LeagueProgressionClient } from './features/baseball/league-progression/league-progresson.client';
 
 export const makeStore = () => {
   return configureStore({
@@ -28,11 +31,14 @@ export const makeStore = () => {
       [BaseballTeamRosterSliceName]: BaseballTeamRosterReducer,
       [BaseballPlayersSliceName]: BaseballPlayersReducer,
       [BaseballTransactionSliceName]: BaseballTransactionReducer,
+      [LeagueProgressionSliceName]: LeagueProgressionReducer,
       [FangraphsBatterStatsSliceName]: FangraphsBatterStatsReducer,
       [FangraphsBatterProjectionsSliceName]: FangraphsBatterProjectionsReducer,
       [FangraphsPitcherStatsSliceName]: FangraphsPitcherStatsReducer,
       [FangraphsPitcherProjectionsSliceName]: FangraphsPitcherProjectionsReducer,
+      [LeagueProgressionClient.reducerPath]: LeagueProgressionClient.reducer,
     },
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(LeagueProgressionClient.middleware),
   });
 };
 

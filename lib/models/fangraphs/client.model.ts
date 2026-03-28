@@ -79,7 +79,7 @@ function FangraphsBaseRequestBody() {
 
     private static readonly DEFAULT: {};
 
-    private static readonly currentSeason = 2025; // new Date().getFullYear();
+    private static readonly currentSeason = new Date().getFullYear();
 
     static get requestBody(): IClientFangraphsStatsRequestBodyBase {
       return {
