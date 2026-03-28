@@ -10,7 +10,13 @@ export async function insertLeagueProgression(
 ): Promise<LeagueProgression[]> {
   const supabase = await createClient();
 
-  const { data: leagueProgression, error } = await supabase.from('league_progression').insert(payload).select();
+  const { data: leagueProgression, error } = await supabase
+    .from('league_progression')
+    .upsert(payload, {
+      onConflict: 'espn_league_id, espn_league_team_id, espn_scoring_period_id',
+      ignoreDuplicates: true, // this option exists on upsert, not insert
+    })
+    .select();
 
   if (error) {
     console.error('Error inserting league progression:', error);

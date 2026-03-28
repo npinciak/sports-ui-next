@@ -10,5 +10,13 @@ export const LeagueProgressionClient = createApi({
       query: () => '/league-progression',
       providesTags: ['LeagueProgression'],
     }),
+    upsertLeagueProgression: builder.mutation<void, Omit<LeagueProgression, 'id'>>({
+      query: body => ({
+        url: '/league-progression',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['LeagueProgression'],
+    }),
   }),
 });

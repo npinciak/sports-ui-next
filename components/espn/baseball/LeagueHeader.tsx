@@ -1,9 +1,9 @@
 'use client';
 
-import { insertLeagueProgression } from '@/app/actions/baseball/league-progression';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LeagueProgressionClient } from '@/lib/features/baseball/league-progression/league-progresson.client';
 import { BaseballLeague } from '@/lib/models/baseball';
 
 interface LeagueHeaderProps {
@@ -25,6 +25,8 @@ export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHead
 
   const scoringPeriodId = league?.scoringPeriodId ? `Day ${league.scoringPeriodId}` : 'Preseason';
 
+  const [upsertLeagueProgression, { isLoading: isUpserting }] = LeagueProgressionClient.useUpsertLeagueProgressionMutation();
+
   async function syncProgression() {
     const entities =
       league?.teams.map(team => ({
@@ -37,7 +39,9 @@ export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHead
       })) || [];
 
     try {
-      const result = await insertLeagueProgression(entities as any);
+      await upsertLeagueProgression(entities as any);
+
+      // const result = await insertLeagueProgression(entities as any);
     } catch (error) {
       console.error('Error syncing league progression:', error);
     }
@@ -77,7 +81,7 @@ export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHead
               </Button>
             </a>
             <Button variant="outline" size="sm" className="w-full md:w-auto" onClick={syncProgression}>
-              Sync Progression
+              {isUpserting ? 'Syncing...' : 'Sync Progression'}
             </Button>
           </div>
         </div>
