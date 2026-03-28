@@ -1,5 +1,5 @@
 import { RootState } from '@/lib/store';
-import { leagueProgressionAdapter } from '../league-progression.slice';
+import { leagueProgressionAdapter } from './league-progression.slice';
 
 const leagueProgressionState = (state: RootState) => state.leagueProgression;
 

@@ -6,10 +6,8 @@ import { FangraphsBatterProjectionsActions } from './features/baseball/fangraphs
 import { FangraphsBatterStatsActions } from './features/baseball/fangraphs-batters-stats.slice';
 import { FangraphsPitcherProjectionsActions } from './features/baseball/fangraphs-pitchers-projections.slice';
 import { FangraphsPitcherStatsActions } from './features/baseball/fangraphs-pitchers-stats.slice';
-import { LeagueProgressionActions } from './features/baseball/league-progression.slice';
 import { BaseballTeamRosterActions } from './features/baseball/roster.slice';
 import { useAppDispatch } from './hooks';
-import { LeagueProgression } from './models';
 import { BaseballLeague, BaseballPlayerEntity } from './models/baseball';
 import { FangraphsPlayerProjectionEntity } from './models/fangraphs';
 import { FangraphsBatterStatsEntity, FangraphsPitcherStatsEntity } from './models/fangraphs/player-stats.model';
@@ -17,7 +15,6 @@ import { FangraphsBatterStatsEntity, FangraphsPitcherStatsEntity } from './model
 interface ServerStateHydratorProps {
   leagueInfo?: BaseballLeague;
   teamRoster?: BaseballPlayerEntity[];
-  leagueProgression?: LeagueProgression[];
   fangraphsBattingLeaders?: FangraphsBatterStatsEntity[];
   fangraphsBattingProjections?: FangraphsPlayerProjectionEntity[];
   fangraphsPitchingLeaders?: FangraphsPitcherStatsEntity[];
@@ -27,7 +24,6 @@ interface ServerStateHydratorProps {
 export default function ServerStateHydrator({
   leagueInfo,
   teamRoster,
-  leagueProgression,
   fangraphsBattingLeaders,
   fangraphsBattingProjections,
   fangraphsPitchingLeaders,
@@ -82,13 +78,6 @@ export default function ServerStateHydrator({
     fangraphsBattingProjections,
     fangraphsPitchingProjections,
   ]);
-
-  useEffect(() => {
-    if (leagueProgression && leagueProgression.length > 0) {
-      // Handle league progression hydration here, e.g. dispatch to a slice
-      dispatch(LeagueProgressionActions.setAll(leagueProgression));
-    }
-  }, [dispatch, leagueProgression]);
 
   return null;
 }

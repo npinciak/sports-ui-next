@@ -4,7 +4,9 @@ import * as d3 from 'd3';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { LeagueProgressionSelectors } from '@/lib/features/baseball/selectors';
+import { LeagueProgressionSelectors } from '@/lib/features/baseball/league-progression/league-progression.selector';
+import { LeagueProgressionClient } from '@/lib/features/baseball/league-progression/league-progresson.client';
+import { BaseballLeagueSelectors } from '@/lib/features/baseball/selectors';
 import { useAppSelector } from '@/lib/hooks';
 
 type Metric = 'totalPoints' | 'leagueRank';
@@ -19,8 +21,6 @@ type TooltipState = {
   leagueRank: number;
   color: string;
 };
-
-const MAX_SCORING_PERIOD_ID = 182;
 
 const TEAM_COLORS = [
   '#0f766e',
@@ -38,6 +38,8 @@ const TEAM_COLORS = [
 ];
 
 export default function LeagueProgression() {
+  const { isFetching } = LeagueProgressionClient.useGetLeagueProgressionQuery();
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const zoomOverlayRef = useRef<SVGRectElement | null>(null);
@@ -58,6 +60,7 @@ export default function LeagueProgression() {
     color: '#2563eb',
   });
   const progression = useAppSelector(state => LeagueProgressionSelectors.selectAll(state));
+  const finalScoringPeriodId = useAppSelector(BaseballLeagueSelectors.getFinalScoringPeriodIdAsNumber);
   const activeTeamId = focusedTeamId ?? hoveredTeamId;
 
   const handleResetZoom = () => {
@@ -107,7 +110,7 @@ export default function LeagueProgression() {
         const byPeriod = new Map(values.map(value => [value.scoringPeriodId, value]));
         return {
           espnTeamId,
-          values: d3.range(1, MAX_SCORING_PERIOD_ID + 1).map(scoringPeriodId => {
+          values: d3.range(1, finalScoringPeriodId + 1).map(scoringPeriodId => {
             const value = byPeriod.get(scoringPeriodId);
             return {
               scoringPeriodId,
@@ -152,7 +155,7 @@ export default function LeagueProgression() {
       const innerHeight = height - margin.top - margin.bottom;
 
       const minPeriod = 1;
-      const maxPeriod = MAX_SCORING_PERIOD_ID;
+      const maxPeriod = finalScoringPeriodId;
       const minMetricValue = d3.min(allValues, d => d[metric]);
       const maxMetricValue = d3.max(allValues, d => d[metric]);
       const isRankMetric = metric === 'leagueRank';
