@@ -11,6 +11,13 @@ import { useAppSelector } from '@/lib/hooks';
 
 type Metric = 'totalPoints' | 'leagueRank';
 
+type CircleDatum = {
+  scoringPeriodId: number;
+  totalPoints: number | null;
+  leagueRank: number | null;
+  espnTeamId: number;
+};
+
 type TooltipState = {
   visible: boolean;
   left: number;
@@ -261,8 +268,8 @@ export default function LeagueProgression() {
         .attr('d', '');
 
       teamSeries
-        .selectAll('circle')
-        .data(d => d.values.filter(value => value[metric] !== null).map(value => ({ ...value, espnTeamId: d.espnTeamId })))
+        .selectAll<SVGCircleElement, CircleDatum>('circle')
+        .data<CircleDatum>(d => d.values.filter(value => value[metric] !== null).map(value => ({ ...value, espnTeamId: d.espnTeamId })))
         .join('circle')
         .attr('cy', d => yScale(d[metric] ?? 0))
         .attr('r', 0)
@@ -272,7 +279,7 @@ export default function LeagueProgression() {
         .attr('r', d => (activeTeamId === null || d.espnTeamId === activeTeamId ? 4 : 2.5));
 
       teamSeries
-        .selectAll('circle')
+        .selectAll<SVGCircleElement, CircleDatum>('circle')
         .attr('fill', d => teamColorById.get(d.espnTeamId) ?? '#2563eb')
         .attr('fill-opacity', d => (activeTeamId === null || d.espnTeamId === activeTeamId ? 1 : 0.18))
         .style('cursor', 'pointer')
@@ -292,8 +299,8 @@ export default function LeagueProgression() {
             top,
             teamId: d.espnTeamId,
             scoringPeriodId: d.scoringPeriodId,
-            totalPoints: d.totalPoints,
-            leagueRank: d.leagueRank,
+            totalPoints: d.totalPoints ?? 0,
+            leagueRank: d.leagueRank ?? 0,
             color: teamColorById.get(d.espnTeamId) ?? '#2563eb',
           });
         })
@@ -312,8 +319,8 @@ export default function LeagueProgression() {
             top,
             teamId: d.espnTeamId,
             scoringPeriodId: d.scoringPeriodId,
-            totalPoints: d.totalPoints,
-            leagueRank: d.leagueRank,
+            totalPoints: d.totalPoints ?? 0,
+            leagueRank: d.leagueRank ?? 0,
             color: teamColorById.get(d.espnTeamId) ?? '#2563eb',
           });
         })
@@ -334,7 +341,7 @@ export default function LeagueProgression() {
         xAxisGroup.call(d3.axisBottom(scaledX).ticks(12).tickFormat(d3.format('d')));
 
         pathSelection.attr('d', d => lineBuilder(d.values) ?? '');
-        teamSeries.selectAll('circle').attr('cx', d => scaledX(d.scoringPeriodId));
+        teamSeries.selectAll<SVGCircleElement, CircleDatum>('circle').attr('cx', d => scaledX(d.scoringPeriodId));
 
         const endpoints = groupedProgression
           .map(group => {
