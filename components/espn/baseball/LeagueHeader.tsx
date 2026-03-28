@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LeagueProgressionClient } from '@/lib/features/baseball/league-progression/league-progresson.client';
 import { BaseballLeague } from '@/lib/models/baseball';
 
 interface LeagueHeaderProps {
@@ -23,6 +24,28 @@ export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHead
   const teamCount = league?.size ? `${league.size} Teams` : null;
 
   const scoringPeriodId = league?.scoringPeriodId ? `Day ${league.scoringPeriodId}` : 'Preseason';
+
+  const [upsertLeagueProgression, { isLoading: isUpserting }] = LeagueProgressionClient.useUpsertLeagueProgressionMutation();
+
+  async function syncProgression() {
+    const entities =
+      league?.teams.map(team => ({
+        espn_league_id: league.id,
+        espn_league_team_id: team.id,
+        league_rank: team.currentRank,
+        total_points: team.totalPoints,
+        espn_scoring_period_id: league.scoringPeriodId,
+        created_at: new Date().toISOString(),
+      })) || [];
+
+    try {
+      await upsertLeagueProgression(entities as any);
+
+      // const result = await insertLeagueProgression(entities as any);
+    } catch (error) {
+      console.error('Error syncing league progression:', error);
+    }
+  }
 
   return (
     <Card className="mb-4">
@@ -57,6 +80,9 @@ export default function LeagueHeader({ isLoading, league, imageUrl }: LeagueHead
                 View on ESPN
               </Button>
             </a>
+            <Button variant="outline" size="sm" className="w-full md:w-auto" onClick={syncProgression}>
+              {isUpserting ? 'Syncing...' : 'Sync Progression'}
+            </Button>
           </div>
         </div>
       </CardContent>

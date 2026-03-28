@@ -1,5 +1,6 @@
 import { getBaseballLeague } from '@/app/actions/baseball/league';
 import LeagueHeader from '@/components/espn/baseball/LeagueHeader';
+import { LeagueProgression } from '@/components/espn/baseball/LeagueProgression';
 import { RosterDropsConnected } from '@/components/espn/baseball/widgets/RosterDrops';
 import { TradeablePlayersCountConnected } from '@/components/espn/baseball/widgets/TradeablePlayersCount';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,6 +19,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <div className="space-y-4">
       <LeagueHeader isLoading={false} league={data} imageUrl={BaseballImageHelper.fantasySportLeagueImage} />
+      <Card>
+        <CardHeader>
+          <CardTitle>Progression</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <LeagueProgression />
+        </CardContent>
+      </Card>
       <Card>
         <CardHeader>
           <CardTitle>Teams</CardTitle>
