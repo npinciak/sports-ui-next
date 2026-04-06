@@ -20,7 +20,7 @@ export async function getFangraphsBattingProjections(): Promise<FangraphsPlayerP
 
   const data = await fetchJson<FangraphsPlayerProjectionEntity[]>(url);
 
-  return data;
+  return data ?? [];
 }
 
 export async function getFangraphsBattingLeaders(req: IClientFangraphsStatsRequestBodyBase): Promise<FangraphsBatterStatsEntity[]> {
@@ -32,9 +32,9 @@ export async function getFangraphsBattingLeaders(req: IClientFangraphsStatsReque
 
   const url = `https://www.fangraphs.com/api/leaders/major-league/data?${params.toString()}`;
 
-  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsBatterStatsEntity>>(url);
+  const response = await fetchJson<FangraphsPageOfResponse<FangraphsBatterStatsEntity>>(url);
 
-  return data;
+  return response?.data ?? [];
 }
 
 export async function getFangraphsPitchingProjections(): Promise<FangraphsPlayerProjectionEntity[]> {
@@ -52,7 +52,7 @@ export async function getFangraphsPitchingProjections(): Promise<FangraphsPlayer
 
   const data = await fetchJson<FangraphsPlayerProjectionEntity[]>(url);
 
-  return data;
+  return data ?? [];
 }
 
 export async function getFangraphsPitchingLeaders(req: IClientFangraphsStatsRequestBodyBase): Promise<FangraphsPitcherStatsEntity[]> {
@@ -64,7 +64,7 @@ export async function getFangraphsPitchingLeaders(req: IClientFangraphsStatsRequ
 
   const url = `https://www.fangraphs.com/api/leaders/major-league/data?${params.toString()}`;
 
-  const { data } = await fetchJson<FangraphsPageOfResponse<FangraphsPitcherStatsEntity>>(url);
+  const response = await fetchJson<FangraphsPageOfResponse<FangraphsPitcherStatsEntity>>(url);
 
-  return data;
+  return response?.data ?? [];
 }

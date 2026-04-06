@@ -14,9 +14,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ yea
 
   const url = `${getLeague}?${params.toString()}`;
 
-  const { teams } = await fetchJson<IClientBaseballLeague>(url);
+  const league = await fetchJson<IClientBaseballLeague>(url);
 
-  const team = teams ? teams.find(t => t.id.toString() === teamId) : null;
+  const team = league?.teams?.find(t => t.id.toString() === teamId) ?? null;
 
   return NextResponse.json({
     metadata: {
