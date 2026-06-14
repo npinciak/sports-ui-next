@@ -1,5 +1,6 @@
 import Lineup from '@/components/espn/baseball/Lineup';
 import TeamHeader from '@/components/espn/baseball/TeamHeader';
+import { TeamInjuryListConnected } from '@/components/espn/baseball/widgets/TeamInjuryList';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
@@ -14,6 +15,7 @@ export default async function Page({ params }: PageProps) {
     <div className="space-y-4 w-full">
       <TeamHeader isLoading={false} teamId={teamId} />
       <div className="grid gap-4 md:grid-cols-2">
+        <TeamInjuryListConnected />
         <Card>
           <CardHeader>
             <CardTitle>Widget A</CardTitle>
