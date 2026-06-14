@@ -71,7 +71,7 @@ export function clientSimplePlayerToBaseballPlayer(clientPlayer: IClientSimplePl
   };
 }
 
-export function transformClientLeagueToBaseballLeagueV2(
+export function transformClientLeagueToBaseballLeague(
   client: IClientBaseballLeague | null,
   genericLeagueSettings: IFantasyLeague | null
 ): BaseballLeague {
