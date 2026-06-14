@@ -109,10 +109,12 @@ export function clientPlayerToFantasyPlayer({
   const health = {
     isActive: injuryStatus === PLAYER_COMPETITION_STATUS.Active,
     isHealthy: true,
-    isInjured: INJURY_STATUS_LIST.includes(injuryStatus as (typeof INJURY_STATUS_LIST)[number]),
+    isInjured: INJURY_STATUS_LIST.includes(injuryStatus),
     injuryStatus,
     injurySeverity: INJURY_SEVERITY_BY_INJURY_STATUS[injuryStatus],
   };
+
+  const playerImage = ImageBuilder({ league }).headshotImgBuilder({ id });
 
   return {
     id: id.toString(),
@@ -121,7 +123,7 @@ export function clientPlayerToFantasyPlayer({
     teamId: proTeamId.toString(),
     teamUid: generateTeamUid(sportId, leagueId, proTeamId),
     position: positionMap[defaultPositionId as ClientMlbPosition]?.abbrev ?? null,
-    img: ImageBuilder({ league }).headshotImgBuilder({ id }),
+    img: playerImage,
     lastNewsDate,
     health,
     stats,
