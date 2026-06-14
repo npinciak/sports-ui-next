@@ -13,7 +13,7 @@ export async function getFangraphsBattingProjections(): Promise<FangraphsPlayerP
     team: '0',
     players: '0',
     lg: 'all',
-    // z: Date.now().toString(),
+    z: Date.now().toString(),
   });
 
   const url = `https://www.fangraphs.com/api/projections?${params.toString()}`;

@@ -10,22 +10,21 @@ interface LayoutProps {
 export default async function Layout({ children, params }: LayoutProps) {
   const { year, leagueId } = await params;
 
-  const data = await getBaseballLeague(year, leagueId);
-  const fangraphsBatting = await getFangraphsBattingProjections();
-  const fangraphsPitching = await getFangraphsPitchingProjections();
+  const [data, fangraphsBatting, fangraphsPitching] = await Promise.allSettled([
+    getBaseballLeague(year, leagueId),
+    getFangraphsBattingProjections(),
+    getFangraphsPitchingProjections(),
+  ]);
 
   return (
     <>
       <ServerStateHydrator
-        leagueInfo={data}
-        fangraphsBattingProjections={fangraphsBatting}
-        fangraphsPitchingProjections={fangraphsPitching}
+        leagueInfo={data.status === 'fulfilled' ? data.value : null}
+        fangraphsBattingProjections={fangraphsBatting.status === 'fulfilled' ? fangraphsBatting.value : []}
+        fangraphsPitchingProjections={fangraphsPitching.status === 'fulfilled' ? fangraphsPitching.value : []}
       />
-      {/* <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black"> */}
-      {/* <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-16   sm:px-8 bg-white dark:bg-black sm:items-start"> */}
+
       {children}
-      {/* </main> */}
-      {/* </div> */}
     </>
   );
 }

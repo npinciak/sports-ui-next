@@ -13,7 +13,7 @@ import { FangraphsPlayerProjectionEntity } from './models/fangraphs';
 import { FangraphsBatterStatsEntity, FangraphsPitcherStatsEntity } from './models/fangraphs/player-stats.model';
 
 interface ServerStateHydratorProps {
-  leagueInfo?: BaseballLeague;
+  leagueInfo?: BaseballLeague | null;
   teamRoster?: BaseballPlayerEntity[];
   fangraphsBattingLeaders?: FangraphsBatterStatsEntity[];
   fangraphsBattingProjections?: FangraphsPlayerProjectionEntity[];
