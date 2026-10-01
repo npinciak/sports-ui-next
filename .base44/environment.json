@@ -1,0 +1,55 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "SUPA_URL",
+      "description": "Supabase project URL — needed for /leagues, /teams and any Supabase-backed page",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "SUPA_KEY",
+      "description": "Supabase anon/public API key — needed for /leagues, /teams and any Supabase-backed page",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "ESPN_BASE",
+      "description": "ESPN API base URL — needed for ESPN fantasy pages and API routes",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "ESPN_FANTASY_BASE_V3",
+      "description": "ESPN Fantasy API v3 base URL — needed for fantasy league/team pages",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "ESPN_FASTCAST_CONNECTION_URL",
+      "description": "ESPN Fastcast websocket URL — needed for live score features",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "TOMORROW_IO",
+      "description": "Tomorrow.io API key — needed for weather features",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "ESPN_CDN",
+      "description": "ESPN CDN URL — used by image builder for player/team images",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "ESPN_CDN_G",
+      "description": "ESPN CDN G URL — used by image builder for alternate images",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+services:
+  web:
+    image: node:22
+    working_dir: /app
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      - BASE44_PUBLIC_HOST_SUFFIX=${BASE44_PUBLIC_HOST_SUFFIX}
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+    command: ["sh", "-ec", "corepack enable pnpm && pnpm install --frozen-lockfile --config.dangerouslyAllowAllBuilds=true && exec pnpm dev --hostname 0.0.0.0 --port 3000"]
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -qO- http://localhost:3000/ >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
